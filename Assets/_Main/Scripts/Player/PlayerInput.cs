@@ -1,18 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
-public class PlayerInput : MonoBehaviour
+public class PlayerInput : MonoBehaviour, iInput
 {
-    // Start is called before the first frame update
-    void Start()
+    #region Properties
+    private float _h;
+    private float _v;
+    public float GetH => _h;
+    public float GetV => _v;
+    #endregion
+
+    #region Methods
+    
+    public bool IsMoving()
     {
-        
+        UpdateInputs();
+        // Verifies Movement
+        return (_h != 0 || _v != 0);
     }
 
-    // Update is called once per frame
-    void Update()
+
+    public void UpdateInputs()
     {
-        
+        _h = Input.GetAxis("Horizontal");
+        _v = Input.GetAxis("Vertical");
     }
+    #endregion
 }
