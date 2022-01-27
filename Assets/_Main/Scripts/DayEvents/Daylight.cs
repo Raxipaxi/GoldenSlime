@@ -17,10 +17,7 @@ public class Daylight : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         _currRotX += speed * Time.deltaTime ;
-        
         _transform.localRotation = Quaternion.Euler(_currRotX,0,0);
-        
     }
 }

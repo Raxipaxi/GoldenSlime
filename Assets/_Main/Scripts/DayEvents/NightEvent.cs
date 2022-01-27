@@ -1,18 +1,13 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class NightEvent : MonoBehaviour
+public class  NightEvent : MonoBehaviour
 {
+    public static event Action OnNight;
     private void OnTriggerEnter(Collider other)
     {
-        if(other!=null)
-         Debug.Log("Se hizo de noche vite");
+        OnNight?.Invoke();
         
     }
-    // private void OnTrig
-    // {
-    //     Debug.Log("Se hizo de noche vite");
-    // }
+
 }

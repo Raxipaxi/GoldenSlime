@@ -1,12 +1,11 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DayEvent : MonoBehaviour
 {
+    public event Action OnDay; 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Es de dia");
+       OnDay?.Invoke();
     }
 }
