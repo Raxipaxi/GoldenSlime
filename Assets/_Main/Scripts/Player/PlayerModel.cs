@@ -11,6 +11,7 @@ public class PlayerModel : Actor
     [SerializeField] private float walkSpeed;
     [SerializeField] private float runSpeed;
     private PlayerView _animation;
+    private Camera _camera;
 
     private Transform _transform;
     // Damageable properties
@@ -29,6 +30,7 @@ public class PlayerModel : Actor
         _rb = GetComponent<Rigidbody>();
         _animation = GetComponent<PlayerView>();
         _transform = transform;
+        _camera = Camera.main;
     }
 
     public void Subscribe(PlayerController controller)
@@ -62,14 +64,27 @@ public class PlayerModel : Actor
         
     }
 
+    private float _rotationVelocity;
+    private void CorrectRotation(Vector3 moveDir)
+    {
+        var targetRotation = Mathf.Atan2(moveDir.x, moveDir.z) * Mathf.Rad2Deg + _camera.transform.eulerAngles.y;
+        var rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref _rotationVelocity, 0.12f);
+        transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
+    }
     public override void Move(Vector3 dir, float speed)
     {
+        var normalizedDir = dir.normalized;
+        CorrectRotation(normalizedDir);
+        transform.position += normalizedDir * Time.deltaTime * speed;
+        //var dirMagnitude = normalizedDir.magnitude;
+        //var moveMagnitude = speed * dirMagnitude;
+       // Vel = moveMagnitude;
         
-        //  dir.y = _rb.velocity.y;
-        var forw = Vector3.Lerp(transform.position,dir.normalized,1);
-        _rb.velocity = new Vector3(dir.x*speed,_rb.velocity.y,dir.z*speed);
-        
-        LookDir(dir);
+        // //  dir.y = _rb.velocity.y;
+        // var forw = Vector3.Lerp(transform.position,dir.normalized,1);
+        // _rb.velocity = new Vector3(dir.x*speed,_rb.velocity.y,dir.z*speed);
+        //
+        // LookDir(dir);
         
     }
 
