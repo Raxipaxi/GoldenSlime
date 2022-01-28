@@ -14,12 +14,13 @@ public class PlayerInput : MonoBehaviour, iInput
     
     public bool IsMoving()
     {
-        UpdateInputs();
-        // Verifies Movement
-        return (_h != 0 || _v != 0);
+        return (GetH != 0 || GetV != 0 );
     }
 
-
+    public bool IsAttackMelee()
+    {
+        return Input.GetKeyDown(KeyCode.Space);
+    }
     public void UpdateInputs()
     {
         _h = Input.GetAxis("Horizontal");

@@ -3,14 +3,16 @@ using UnityEngine;
 
 public class PlayerWalkState<T> : State<T>
 {
-    private T _input;
+    private T _inputIdle;
+    private T _inputMelee;
     private Action<Vector3> _onWalk;
     private iInput _playerInput;
 
-    public PlayerWalkState(Action<Vector3> onWalk, T inputIdle, iInput playerInput)
+    public PlayerWalkState(Action<Vector3> onWalk, T inputIdleIdle,T inputMelee, iInput playerInput)
     {
         _onWalk = onWalk;
-        _input = inputIdle;
+        _inputMelee = inputMelee;
+        _inputIdle = inputIdleIdle;
         _playerInput = playerInput; 
     }
 
@@ -22,13 +24,17 @@ public class PlayerWalkState<T> : State<T>
        
         if (!_playerInput.IsMoving())
         {
-            _fsm.Transition(_input); // Trans to Idle
+            _fsm.Transition(_inputIdle);
+            return; // Trans to Idle
         }
-        else
+        if(_playerInput.IsAttackMelee())
         {
-            Vector3 dir = new Vector3(h, 0, v);
-            _onWalk?.Invoke(dir);
+            _fsm.Transition(_inputMelee);
+            return;
         }
+        
+        Vector3 dir = new Vector3(h, 0, v);
+        _onWalk?.Invoke(dir);
         
     }
 }

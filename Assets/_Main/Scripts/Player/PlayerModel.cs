@@ -37,23 +37,15 @@ public class PlayerModel : Actor
     {
         controller.OnIdle += Idle;
         controller.OnMove += Walk;
+        controller.OnMelee += Attack;
     }
     
     #region Mobile Methods
-    public override void Walk(Vector3 dir)
+    public void Walk(Vector3 dir)
     {
         Move(dir, walkSpeed);
         _currSpeed = walkSpeed;
 
-    }
-
-    public override void LookDir(Vector3 dir) //TODO sacar
-    {
-        if (dir!=Vector3.zero)
-        {
-            _transform.localRotation *= Quaternion.Euler(dir.x * Time.deltaTime * 360,0,0);
-        }
-        _transform.forward = dir;
     }
 
     public override void Idle() 
@@ -73,12 +65,15 @@ public class PlayerModel : Actor
         var normalizedDir = dir.normalized;
         CorrectRotation(normalizedDir);
         _rb.velocity = new Vector3(normalizedDir.x*speed,_rb.velocity.y,normalizedDir.z*speed);
-        
-         //LookDir(dir);
-        
+
     }
 
-    public override void Run(Vector3 dir)
+    public override void Attack(float dmg)
+    {
+        Debug.Log("CACHIN");
+    }
+
+    public void Run(Vector3 dir)
     {
         Move(dir,runSpeed);
         _currSpeed = runSpeed;

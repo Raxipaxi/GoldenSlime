@@ -19,48 +19,28 @@ public class Actor : MonoBehaviour, iDamageable, iMobile
         
     }
 
-    public virtual void Idle()
-    {
 
-    }
 
     #endregion
 
     #region iMobile
 
-    public virtual void Walk(Vector3 dir)
+    public virtual void Idle()
+    {
+
+    }
+
+    public virtual void Attack(float dmg)
     {
         
     }
 
-    public virtual void Attack(int dmg)
-    {
-        
-    }
-
-    public virtual void LookDir(Vector3 dir)
-    {
-        
-    }
-
-    public virtual void Run(Vector3 dir)
-    {
-       
-    }
 
     public virtual void Move(Vector3 dir, float speed)
     {
        
     }
-
-    public virtual void Chase()
-    {
-        
-    }
-    public virtual bool Patrol()
-    {
-        return true;
-    }
+    
     #endregion
     
 }

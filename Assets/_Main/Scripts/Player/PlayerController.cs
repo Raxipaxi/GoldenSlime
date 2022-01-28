@@ -5,13 +5,14 @@ public class PlayerController : MonoBehaviour
 {
     #region Properties
 
-    private FSM<PlayerStates> _fsm;
+    private FSM<PlayerStatesEnum> _fsm;
     private PlayerModel _player;
     private iInput _playerInput;
     #endregion
 
     public event Action<Vector3> OnMove; 
-    public event Action OnIdle; 
+    public event Action OnIdle;
+    public event Action<float> OnMelee;
     private void Awake()
     {
         _player = GetComponent<PlayerModel>();
@@ -29,13 +30,24 @@ public class PlayerController : MonoBehaviour
     {
         
         //--------------- FSM Creation -------------------//                
-        var idle = new PlayerIdleState<PlayerStates>(IdleCommmand, PlayerStates.Walk, _playerInput );
-        var walk = new PlayerWalkState<PlayerStates>(WalkCommmand, PlayerStates.Idle, _playerInput);
+        var idle = new PlayerIdleState<PlayerStatesEnum>(IdleCommmand, PlayerStatesEnum.Walk,PlayerStatesEnum.Melee,_playerInput );
+        var walk = new PlayerWalkState<PlayerStatesEnum>(WalkCommmand, PlayerStatesEnum.Idle, PlayerStatesEnum.Melee, _playerInput);
+        var melee = new PlayerAttackState<PlayerStatesEnum>(PlayerStatesEnum.Idle,PlayerStatesEnum.Walk,AttMeleeCommand,1,_playerInput);
         
-        idle.AddTransition(PlayerStates.Walk, walk);
-        walk.AddTransition(PlayerStates.Idle, idle);
+        
+        // Idle
+        idle.AddTransition(PlayerStatesEnum.Walk, walk);
+        idle.AddTransition(PlayerStatesEnum.Melee, melee);
+        
+        // Walk
+        walk.AddTransition(PlayerStatesEnum.Idle, idle);
+        walk.AddTransition(PlayerStatesEnum.Melee, melee);
+        
+        // Melee
+        melee.AddTransition(PlayerStatesEnum.Idle, idle);
+        melee.AddTransition(PlayerStatesEnum.Walk, walk);
 
-        _fsm = new FSM<PlayerStates>();
+        _fsm = new FSM<PlayerStatesEnum>();
         // Set init state
         _fsm.SetInit(idle);
 
@@ -48,6 +60,11 @@ public class PlayerController : MonoBehaviour
     public void IdleCommmand()
     {
         OnIdle?.Invoke();
+    }
+
+    public void AttMeleeCommand(float dmg)
+    {
+        OnMelee?.Invoke(dmg);   
     }
     
     void Update()
