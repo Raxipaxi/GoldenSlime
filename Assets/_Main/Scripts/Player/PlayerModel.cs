@@ -47,21 +47,18 @@ public class PlayerModel : Actor
 
     }
 
-    public override void LookDir(Vector3 dir)
+    public override void LookDir(Vector3 dir) //TODO sacar
     {
         if (dir!=Vector3.zero)
         {
             _transform.localRotation *= Quaternion.Euler(dir.x * Time.deltaTime * 360,0,0);
         }
-       
-       
         _transform.forward = dir;
     }
 
     public override void Idle() 
     {
         _rb.velocity = Vector3.zero;
-        
     }
 
     private float _rotationVelocity;
@@ -75,16 +72,9 @@ public class PlayerModel : Actor
     {
         var normalizedDir = dir.normalized;
         CorrectRotation(normalizedDir);
-        transform.position += normalizedDir * Time.deltaTime * speed;
-        //var dirMagnitude = normalizedDir.magnitude;
-        //var moveMagnitude = speed * dirMagnitude;
-       // Vel = moveMagnitude;
+        _rb.velocity = new Vector3(normalizedDir.x*speed,_rb.velocity.y,normalizedDir.z*speed);
         
-        // //  dir.y = _rb.velocity.y;
-        // var forw = Vector3.Lerp(transform.position,dir.normalized,1);
-        // _rb.velocity = new Vector3(dir.x*speed,_rb.velocity.y,dir.z*speed);
-        //
-        // LookDir(dir);
+         //LookDir(dir);
         
     }
 
