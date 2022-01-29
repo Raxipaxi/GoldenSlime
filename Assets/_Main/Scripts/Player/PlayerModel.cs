@@ -63,14 +63,14 @@ public class PlayerModel : Actor
     public override void Move(Vector3 dir, float speed)
     {
         var normalizedDir = dir.normalized;
-        CorrectRotation(normalizedDir);
+        CorrectRotation(normalizedDir); //TODO rever rotacion
         _rb.velocity = new Vector3(normalizedDir.x*speed,_rb.velocity.y,normalizedDir.z*speed);
 
     }
 
     public override void Attack(float dmg)
     {
-        Debug.Log("CACHIN");
+        Debug.Log("CACHIN"); // TODO agregar la accion de danio
     }
 
     public void Run(Vector3 dir)

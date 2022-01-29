@@ -46,7 +46,6 @@ public class Wander : ISteering
 
         _velocity = Vector3.ClampMagnitude(_velocity + steering, _maxForce);
         _velocity.y = 0;
-        Debug.Log(_velocity);
         return _velocity;
 
     }

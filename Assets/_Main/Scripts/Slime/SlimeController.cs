@@ -15,9 +15,9 @@ public class SlimeController : MonoBehaviour
     public ObstacleAvoidance behaviour;
     #endregion
 
-    public event Action<Vector3> OnMove;
-    public event Action OnPatrol;
-    public event Action OnChase;
+    //ublic event Action<Vector3> OnMove;
+    public event Action<Vector3> OnWalk;
+    public event Action<Vector3> OnRun;
     public event Action OnAttack;
     public event Action OnDie, OnHit;
 
@@ -38,16 +38,16 @@ public class SlimeController : MonoBehaviour
     #region Commands
     private void WalkCommand(Vector3 moveDir)
     {
-        OnMove?.Invoke(moveDir);
+        OnWalk?.Invoke(moveDir);
     }
-    private void PatrolCommand()
+    private void RunCommand(Vector3 dir)
     {
-        OnPatrol.Invoke();
+        OnRun?.Invoke(dir);
     }
     #endregion
     private void FsmInit()
     {
-        var patrol = new SlimePatrolState<EnemyStates>(CanSeeTarget, WalkCommand, OnPatrol , _root,_target.transform, behaviour);
+        var patrol = new SlimePatrolState<EnemyStates>(CanSeeTarget, WalkCommand, _root,_target.transform, behaviour);
         _fsm = new FSM<EnemyStates>();
         _fsm.SetInit(patrol);
     }

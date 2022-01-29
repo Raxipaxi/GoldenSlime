@@ -7,7 +7,7 @@ public interface iMobile // Can move and attack
     void Idle();
     void Walk(Vector3 dir);
     
-    void Attack(int dmg);
+    void Attack(float dmg);
 
     void Patrol();
 

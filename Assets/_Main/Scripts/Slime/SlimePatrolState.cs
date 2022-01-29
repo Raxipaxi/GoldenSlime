@@ -9,15 +9,14 @@ public class SlimePatrolState<T> : State<T>
     private Transform _transform;
     private float _minDistance;
     private ObstacleAvoidance _obstacleAvoidance;
-    public SlimePatrolState(Func<bool> isSeen, Action<Vector3> onWalk, Action onStartPatrol,INode root, Transform transform, ObstacleAvoidance obstacleAvoidance)
+    public SlimePatrolState(Func<bool> isSeen, Action<Vector3> onWalk,INode root, Transform transform, ObstacleAvoidance obstacleAvoidance)
     {
         _isSeen = isSeen;
         _root = root;
         _onWalk = onWalk;
         _transform = transform;
         _obstacleAvoidance = obstacleAvoidance;
-        onStartPatrol.Invoke();
-        
+
     }
     public override void Awake()
     {

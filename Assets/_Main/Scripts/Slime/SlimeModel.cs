@@ -28,21 +28,34 @@ public class SlimeModel:Actor
 
     public void Suscribe(SlimeController controller)
     {
-        controller.OnMove += Move;
-        controller.OnPatrol += PatrolHandler;
+
+        controller.OnRun += Run;
+        controller.OnWalk += Walk;
+        
+
     }
 
     #region Mobile Methods
 
     public void Move(Vector3 dir)
     {
-        _transform.position = Vector3.MoveTowards(_transform.position, dir, _currentSpeed * Time.deltaTime);
+        var normalizedDir = dir.normalized;
+        _rb.velocity =  new Vector3(normalizedDir.x*CurrentSpeed,_rb.velocity.y,normalizedDir.z*CurrentSpeed);
     }
 
-    private void PatrolHandler()
+    public void Walk(Vector3 dir)
     {
         _currentSpeed = _stats.WalkSpeed;
+        Move(dir);
+
     }
+    public void Run(Vector3 dir)
+    {
+        _currentSpeed = _stats.RunSpeed;
+        Move(dir);
+
+    }
+    
     #region Damagable Methods
     public override void Die()
     {
