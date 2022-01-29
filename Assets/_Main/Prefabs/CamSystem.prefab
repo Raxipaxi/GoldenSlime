@@ -26,8 +26,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 605024313215176269}
-  m_LocalRotation: {x: 0.70090926, y: 5.2781577e-33, z: -5.1868314e-33, w: 0.71325046}
-  m_LocalPosition: {x: -0.16545439, y: 2.268062, z: 0.66166204}
+  m_LocalRotation: {x: 0.5735764, y: -0, z: -0, w: 0.8191521}
+  m_LocalPosition: {x: -0.16545439, y: 2.101062, z: 0.16166204}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6413371608553859897}
@@ -56,11 +56,11 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: -1.48
-  far clip plane: 3.5
+  near clip plane: 0.12
+  far clip plane: 10
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 3.5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -174,14 +174,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4192871230837287143}
-  m_LocalRotation: {x: 0.70090926, y: 5.2781577e-33, z: -5.1868314e-33, w: 0.71325046}
-  m_LocalPosition: {x: -0.16545439, y: 2.268062, z: 0.66166204}
+  m_LocalRotation: {x: 0.5735764, y: 0, z: 0, w: 0.8191521}
+  m_LocalPosition: {x: -0.16545439, y: 2.101062, z: 0.16166204}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2897227723688438330}
   m_Father: {fileID: 6413371608553859897}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 70, y: 0, z: 0}
 --- !u!114 &5433619517803959411
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -204,9 +204,9 @@ MonoBehaviour:
   m_Follow: {fileID: 0}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 5
-    NearClipPlane: 0.001
-    FarClipPlane: 3.5
+    OrthographicSize: 3.5
+    NearClipPlane: 0.12
+    FarClipPlane: 10
     Dutch: 0
     LensShift: {x: 0, y: 0}
   m_Transitions:
@@ -301,8 +301,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa7155796051b734daa718462081dc5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_BindingMode: 1
-  m_FollowOffset: {x: 0, y: 3, z: 0}
+  m_BindingMode: 0
+  m_FollowOffset: {x: 0, y: 3, z: -0.5}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1

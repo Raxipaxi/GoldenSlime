@@ -1,7 +1,8 @@
 ﻿public enum PlayerStates
 {
     Idle,
-    Walk
+    Walk,
+    Melee
 }
 
 public enum EnemyStates
