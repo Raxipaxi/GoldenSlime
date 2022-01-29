@@ -41,7 +41,7 @@ public class ObstacleAvoidance: ISteering
         behaviours.Add(Steering.Flee,flee);
         var chase = new ChaseBehaviour(self, target, targetVel, timePrediction);
         behaviours.Add(Steering.Chase, chase);
-        var wander = new Wander(self,60f,10f);
+        var wander = new Wander(self,250f,10f);
         behaviours.Add(Steering.Wander, wander);
     }
 

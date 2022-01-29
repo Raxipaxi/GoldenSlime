@@ -40,6 +40,7 @@ public class SlimeModel:Actor
     public void Move(Vector3 dir)
     {
         var normalizedDir = dir.normalized;
+        transform.rotation = Quaternion.Slerp(_transform.rotation, Quaternion.LookRotation(dir), _stats.RotationSpeed);
         _rb.velocity =  new Vector3(normalizedDir.x*CurrentSpeed,_rb.velocity.y,normalizedDir.z*CurrentSpeed);
     }
 

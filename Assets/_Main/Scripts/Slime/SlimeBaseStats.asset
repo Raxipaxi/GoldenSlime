@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c51db4fadefd874c96d876069359c27, type: 3}
   m_Name: SlimeBaseStats
   m_EditorClassIdentifier: 
-  _walkSpeed: 3
+  _walkSpeed: 2
   _runSpeed: 5
   _life: 10
-  _rotationSpeed: 5
+  _rotationSpeed: 1
