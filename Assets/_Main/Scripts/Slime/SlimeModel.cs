@@ -36,7 +36,6 @@ public class SlimeModel:Actor
 
     public void Move(Vector3 dir)
     {
-         var finaldir = (dir - _transform.position).normalized;
         var finalRot = Quaternion.LookRotation(dir);
         _transform.rotation = Quaternion.Slerp(_transform.rotation, finalRot, _stats.RotationSpeed * Time.deltaTime);
         _transform.position = Vector3.MoveTowards(_transform.position, dir, _currentSpeed * Time.deltaTime);
