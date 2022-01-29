@@ -6,10 +6,10 @@
 
 public enum EnemyStates
 {
-    Idle,
     Patrol,
     Follow,
-    Attack
+    Attack,
+    Escape
 }
 
 public class LittleKinghtAnim

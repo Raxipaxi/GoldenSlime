@@ -2,32 +2,82 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-public class SlimeController:MonoBehaviour
+public class SlimeController : MonoBehaviour
 {
     #region properties
     private FSM<EnemyStates> _fsm;
-    private SlimeModel _slime;
+    private SlimeModel _slimeModel;
+    [SerializeField] private PlayerModel _target;
+
+    [SerializeField] private ObstacleAvoidanceSO avoidtats;
+    private INode _root;
+
+    public ObstacleAvoidance Behaviour;
     #endregion
 
     public event Action<Vector3> OnMove;
-    public event Action OnIdle;
+    public event Action OnPatrol;
+    public event Action OnChase;
+    public event Action OnAttack;
+    public event Action OnDie, OnHit;
 
     private void Awake()
     {
-        _slime = GetComponent<SlimeModel>();
-        FsmInit();
+        _slimeModel = GetComponent<SlimeModel>();
+        Behaviour = new ObstacleAvoidance(transform, null, avoidtats.CheckRadius, avoidtats.MaxObj, avoidtats.ObstacleLayer, avoidtats.Multiplier, _target.Vel, avoidtats.TimePrediction, _slimeModel._stats.RotationSpeed, _slimeModel.CurrentSpeed, "Wander");
+
     }
 
     private void Start()
     {
-        _slime.Suscribe(this);
+        _slimeModel.Suscribe(this);
+        FsmInit();  
+        InitDecisionTree();
     }
+    #region Commands
+    private void WalkCommand(Vector3 moveDir)
+    {
+        OnMove?.Invoke(moveDir);
+    }
+    private void PatrolCommand()
+    {
+        OnPatrol.Invoke();
+    }
+    #endregion
     private void FsmInit()
     {
-
+        var patrol = new SlimePatrolState<EnemyStates>(CanSeeTarget, WalkCommand, OnPatrol , _root,_target.transform, Behaviour);
+        _fsm = new FSM<EnemyStates>();
+        _fsm.SetInit(patrol);
     }
-    public void WalkCommand(Vector3 dir)
+    private void InitDecisionTree()
+    {
+        var goToIdle = new ActionNode(() => _fsm.Transition(EnemyStates.Patrol));
+        var goToAttack = new ActionNode(() => _fsm.Transition(EnemyStates.Attack));
+        var goToChase = new ActionNode(() => _fsm.Transition(EnemyStates.Follow));
+        var goToScape = new ActionNode(() => _fsm.Transition(EnemyStates.Escape));
+
+        QuestionNode isOnReach = new QuestionNode(CanAttack, goToAttack, goToChase);
+        QuestionNode isDayTime = new QuestionNode(DayTime, goToScape, isOnReach);
+        QuestionNode isOnPlayerSight = new QuestionNode(CanSeeTarget, isDayTime, goToIdle);
+    }
+
+    private bool CanAttack()
     {
 
+        return CanAttack();
+    }
+    private bool DayTime()
+    {
+        return DayTime();
+    }
+    public bool CanSeeTarget()
+    {
+        var playerInSight = _slimeModel.LineOfSight.CanSeeSomeone(_target.transform);
+        return playerInSight;
+    }
+    private void Update()
+    {
+        _fsm.OnUpdate();
     }
 }

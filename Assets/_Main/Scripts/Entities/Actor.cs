@@ -56,9 +56,9 @@ public class Actor : MonoBehaviour, iDamageable, iMobile
     {
         throw new NotImplementedException();
     }
-    public virtual bool Patrol()
+    public virtual void Patrol()
     {
-        return true;
+        
     }
     #endregion
     

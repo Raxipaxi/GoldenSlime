@@ -9,7 +9,7 @@ public interface iMobile // Can move and attack
     
     void Attack(int dmg);
 
-    bool Patrol();
+    void Patrol();
 
     void Chase();
 

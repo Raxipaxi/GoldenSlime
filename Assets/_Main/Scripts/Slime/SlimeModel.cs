@@ -4,67 +4,59 @@ using UnityEngine;
 
 public class SlimeModel:Actor
 {
-    #region
-    [SerializeField] private float walkSpeed;
-    [SerializeField] private float runSpeed;
-    [SerializeField] private float currentSpeed;
-    [SerializeField] private float life;
-   
-    private float CurrentLife => life;
+    #region Properties
+    [SerializeField] public SlimeStatsSO _stats;
+    private float _currentSpeed;
+    public float CurrentSpeed => _currentSpeed;
+    private event Action OnDie;
+    
+    private float _currentLife;
+    public float CurrentLife => _currentLife;
     private Transform _transform;
     private Rigidbody _rb;
+    [SerializeField] private LineOfSight _lineOfSight;
+    public LineOfSight LineOfSight => _lineOfSight;
     #endregion
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
-        _transform = transform;    
+        _transform = transform;
+        _currentLife = MaxLife;
+        _lineOfSight = GetComponent<LineOfSight>();
     }
 
     public void Suscribe(SlimeController controller)
     {
-        controller.OnIdle += Idle;
-        controller.OnMove += Walk;
+        controller.OnMove += Move;
+        controller.OnPatrol += PatrolHandler;
     }
 
     #region Mobile Methods
-    public override void Walk(Vector3 dir)
+
+    public void Move(Vector3 dir)
     {
-        Move(dir, walkSpeed);
-        currentSpeed = walkSpeed;
-    
+         var finaldir = (dir - _transform.position).normalized;
+        var finalRot = Quaternion.LookRotation(dir);
+        _transform.rotation = Quaternion.Slerp(_transform.rotation, finalRot, _stats.RotationSpeed * Time.deltaTime);
+        _transform.position = Vector3.MoveTowards(_transform.position, dir, _currentSpeed * Time.deltaTime);
     }
 
-    public override void LookDir(Vector3 dir)
+    private void PatrolHandler()
     {
-        if (dir != Vector3.zero)
-        {
-            _transform.localRotation *= Quaternion.Euler(dir.x * Time.deltaTime * 360, 0, 0);
-        }
-        transform.forward = dir;
+        _currentSpeed = _stats.WalkSpeed;
     }
-
-    public override void Idle()
-    {
-        _rb.velocity = Vector3.zero;
-    }
-
-    public override void Run(Vector3 dir)
-    {
-        Move(dir, runSpeed);
-        currentSpeed = runSpeed;
-    }
-
     #region Damagable Methods
     public override void Die()
     {
-        //OnDie?.Invoke();
-        //Habria que hacer un pool que se comunique con esto
+        OnDie?.Invoke();
+        Destroy(gameObject);
+       // Habria que hacer un pool que se comunique con esto
     }
     public override void TakeDamage(float dmg)
     {
-        life -= dmg;
-        if (CurrentLife <= 0)
+       _currentLife -= dmg;
+        if (_currentLife <= 0)
         {
             Die();
         }
