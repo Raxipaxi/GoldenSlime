@@ -123,40 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &347858077 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1528472931095166327, guid: 0f5dc634264f2cc439e3bde06f157f26, type: 3}
-  m_PrefabInstance: {fileID: 624773028}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &347858078
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 347858077}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc2900825bdcf91438fa83f14ec1c0fd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _stats: {fileID: 0}
-  _lineOfSight: {fileID: 0}
---- !u!114 &347858079
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 347858077}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67117290f38586b4bbd5f0fe10ca560f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _target: {fileID: 0}
-  avoidtats: {fileID: 0}
-  behaviour: {fileID: 0}
 --- !u!4 &347858080 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8031889241536045250, guid: 0f5dc634264f2cc439e3bde06f157f26, type: 3}
@@ -238,7 +204,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _target: {fileID: 691257799}
   avoidtats: {fileID: 11400000, guid: bf095bf9a9e82304fb5f2c2c0586fd2d, type: 2}
-  behaviour: {fileID: 624773033}
 --- !u!114 &624773031
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -267,19 +232,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   origin: {fileID: 347858080}
   _stats: {fileID: 11400000, guid: 608e419dbb1f29d4089d7afb352785d8, type: 2}
---- !u!114 &624773033
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 624773029}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf991adc50786ec45b7e57208b64c303, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  StopMovement: 0
 --- !u!1 &691257796 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5681194021027468275, guid: fb3cfd52a2b9ee44c82030fc91a5cf21, type: 3}
