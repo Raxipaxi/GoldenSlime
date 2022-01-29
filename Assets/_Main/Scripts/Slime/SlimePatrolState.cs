@@ -22,7 +22,6 @@ public class SlimePatrolState<T> : State<T>
     public override void Awake()
     {
         _obstacleAvoidance.SetNewBehaviour(ObstacleAvoidance.Steering.Wander);
-        _obstacleAvoidance.GetDir();
     }
     public override void Execute()
     {
@@ -33,13 +32,7 @@ public class SlimePatrolState<T> : State<T>
             return;
         }
         var dir = _obstacleAvoidance.GetDir();
-        var dist = Vector3.Distance(dir, _transform.position);
-        if(dist <= 0.5f)
-        {
-            Debug.Log("A");
-            _obstacleAvoidance.GetDir();
-        }
-        dir.y = 0;
+         dir.y = 0;
         _onWalk?.Invoke(dir);
     }
 }
