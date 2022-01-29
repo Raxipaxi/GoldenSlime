@@ -4,4 +4,5 @@ using UnityEngine;
 interface ISteering
 {
     Vector3 GetDir();
+    Transform SetTarget { set; }
 }

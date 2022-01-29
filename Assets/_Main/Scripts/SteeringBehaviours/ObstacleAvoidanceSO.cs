@@ -12,7 +12,7 @@ public class ObstacleAvoidanceSO : ScriptableObject
     [SerializeField] private float _multiplier;
     [SerializeField] private float _timePrediction;
     [SerializeField] private LayerMask _obstacleLayer;
-    [SerializeField] private string _defaultBehaviour;
+    [SerializeField] private ObstacleAvoidance.Steering _defaultBehaviour;
     public Transform Self => _self;
     public Transform Target => _target;
     public float CheckRadius => _checkRadius;
@@ -21,6 +21,6 @@ public class ObstacleAvoidanceSO : ScriptableObject
     public float TargetRotSpeed => _targetRotSpeed;
     public float TimePrediction => _timePrediction;
     public LayerMask ObstacleLayer => _obstacleLayer;
-    public string DefaultBehaviour => _defaultBehaviour;
+    public ObstacleAvoidance.Steering DefaultBehaviour => _defaultBehaviour;
 }
 

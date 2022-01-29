@@ -3,26 +3,27 @@ using UnityEngine;
 
 public class Wander : ISteering
 {
-    [SerializeField] private float _speed = 1;
-    [SerializeField] private Transform _transform;
+    private Transform _transform;
     private Vector3 wayPoint;
     private float amplitude = 5f;
-    private float rotationSpeed = 2f;
 
-    public Wander(Transform self,float moveSpeed,float rotSpeed)
+    public Wander(Transform self)
     {
-
-        _speed = moveSpeed;
         _transform = self;
     }
-    public void Wanderer()
+
+    public Transform SetTarget
     {
-        Vector2 randomPos = new Vector2(Random.Range(-amplitude,amplitude),Random.Range(-amplitude, amplitude));
-        wayPoint = new Vector3(randomPos.x, 0, randomPos.y) + _transform.position;
+        set
+        {
+            _transform = value;
+        }
     }
 
     public Vector3 GetDir()
     {
-       return wayPoint;
+        Vector2 randomPos = new Vector2(Random.Range(-amplitude, amplitude), Random.Range(-amplitude, amplitude));
+        wayPoint = new Vector3(randomPos.x, 0, randomPos.y) + _transform.position;
+        return wayPoint;
     }
 }

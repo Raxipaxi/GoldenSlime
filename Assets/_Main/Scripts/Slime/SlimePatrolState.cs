@@ -19,7 +19,7 @@ public class SlimePatrolState<T> : State<T>
     }
     public override void Awake()
     {
-        _obstacleAvoidance.SetNewBehaviour("Wander");
+        _obstacleAvoidance.SetNewBehaviour(ObstacleAvoidance.Steering.Wander);
     }
     public override void Execute()
     {

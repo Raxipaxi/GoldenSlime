@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObstacleAvoidance:ISteering
+public class ObstacleAvoidance: ISteering
 {
     private Transform _self;
     private Transform _target;
@@ -10,29 +10,39 @@ public class ObstacleAvoidance:ISteering
     private Collider[] collisions;
     private LayerMask _obstacleLayer;
     private float _multiplier;
-    private Dictionary<string, ISteering> behaviours;
+    private Dictionary<Steering, ISteering> behaviours = new Dictionary<Steering, ISteering>();
     private ISteering _currentBehaviour;
     public bool StopMovement;
-    public ObstacleAvoidance(Transform self,Transform target, float radius, int maxObjs,LayerMask obstacleLayers,float multiplier, float targetVel,float timePrediction, float rotSpeed, float ownerSpeed,string desiredBehaviour)
+    public enum Steering
+    {
+        Flee,
+        Chase,
+        Wander
+    }
+
+    public ObstacleAvoidance(Transform self, Transform target, float radius, int maxObjs, LayerMask obstacleLayers, float multiplier, float targetVel, float timePrediction,Steering desiredBehaviour)
     {
         _self = self;
-        _target = target;
         _checkRadius = radius;
         _multiplier = multiplier;
         collisions = new Collider[maxObjs];
+        behaviours = new Dictionary<Steering, ISteering>();
         _obstacleLayer = obstacleLayers;
-
-        behaviours = new Dictionary<string, ISteering>();
-        SetBehaviours(self, target, targetVel, timePrediction,ownerSpeed,rotSpeed);
+        SetBehaviours(self, target, targetVel, timePrediction);
         SetNewBehaviour(desiredBehaviour);
-        
     }
-
-    private void SetBehaviours(Transform self, Transform target, float targetVel, float timePrediction, float speed, float rotSpeed)
+    public ObstacleAvoidance()
     {
-        behaviours.Add("Flee", new FleeBehaviour(self,target,targetVel,timePrediction));
-        behaviours.Add("Chase", new ChaseBehaviour(self, target, targetVel, timePrediction));
-        behaviours.Add("Wander", new Wander(self, speed,rotSpeed));
+
+    }
+    private void SetBehaviours(Transform self, Transform target, float targetVel, float timePrediction)
+    {
+        var flee = new FleeBehaviour(self, target, targetVel, timePrediction);
+        behaviours.Add(Steering.Flee,flee);
+        var chase = new ChaseBehaviour(self, target, targetVel, timePrediction);
+        behaviours.Add(Steering.Chase, chase);
+        var wander = new Wander(self);
+        behaviours.Add(Steering.Wander, wander);
     }
 
     public Vector3 GetDir()
@@ -70,11 +80,10 @@ public class ObstacleAvoidance:ISteering
         return dir;
 
     }
-    public void SetNewBehaviour(string newBehaviourKey)
+    public void SetNewBehaviour(Steering newBehaviourKey)
     {
         _currentBehaviour = behaviours[newBehaviourKey];
     }
-
     public Transform SetTarget 
     {
         set

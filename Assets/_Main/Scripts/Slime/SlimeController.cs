@@ -12,7 +12,7 @@ public class SlimeController : MonoBehaviour
     [SerializeField] private ObstacleAvoidanceSO avoidtats;
     private INode _root;
 
-    public ObstacleAvoidance Behaviour;
+    public ObstacleAvoidance behaviour;
     #endregion
 
     public event Action<Vector3> OnMove;
@@ -24,7 +24,8 @@ public class SlimeController : MonoBehaviour
     private void Awake()
     {
         _slimeModel = GetComponent<SlimeModel>();
-        Behaviour = new ObstacleAvoidance(transform, null, avoidtats.CheckRadius, avoidtats.MaxObj, avoidtats.ObstacleLayer, avoidtats.Multiplier, _target.Vel, avoidtats.TimePrediction, _slimeModel._stats.RotationSpeed, _slimeModel.CurrentSpeed, "Wander");
+        behaviour = new ObstacleAvoidance(transform, _target.transform, avoidtats.CheckRadius, avoidtats.MaxObj, avoidtats.ObstacleLayer, avoidtats.Multiplier, _target.Vel, avoidtats.TimePrediction, ObstacleAvoidance.Steering.Wander);
+        
 
     }
 
@@ -46,7 +47,7 @@ public class SlimeController : MonoBehaviour
     #endregion
     private void FsmInit()
     {
-        var patrol = new SlimePatrolState<EnemyStates>(CanSeeTarget, WalkCommand, OnPatrol , _root,_target.transform, Behaviour);
+        var patrol = new SlimePatrolState<EnemyStates>(CanSeeTarget, WalkCommand, OnPatrol , _root,_target.transform, behaviour);
         _fsm = new FSM<EnemyStates>();
         _fsm.SetInit(patrol);
     }
