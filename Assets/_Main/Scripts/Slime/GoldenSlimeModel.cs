@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class SlimeModel : Actor, IPooleable
+public class GoldenSlimeModel : Actor, IPooleable
 {
     #region Properties
     [SerializeField] public SlimeStatsSO _stats;
@@ -27,7 +27,7 @@ public class SlimeModel : Actor, IPooleable
         _lineOfSight = GetComponent<LineOfSight>();
     }
 
-    public void Suscribe(SlimeController controller)
+    public void Suscribe(GoldenSlimeController controller)
     {
 
         controller.OnRun += Run;
@@ -72,7 +72,6 @@ public class SlimeModel : Actor, IPooleable
     public override void TakeDamage(float dmg)
     {
         _currentLife -= dmg;
-//        Debug.Log("Me hiciste danio");
         if (_currentLife <= 0)
         {
             Die();

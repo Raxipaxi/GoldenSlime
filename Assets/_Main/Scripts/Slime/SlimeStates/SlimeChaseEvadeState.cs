@@ -27,7 +27,6 @@ public class SlimeChaseEvadeState<T> : State<T>
 
     public override void Awake()
     {
-        Debug.Log("AWAKE");
         _obst.SetNewBehaviour(_steering);
         _obst.SetNewTarget(_target);
         ResetCounter();
@@ -49,7 +48,6 @@ public class SlimeChaseEvadeState<T> : State<T>
             _root.Execute();
             return;
         }
-        Debug.Log("No sale");
         
     }
 }
