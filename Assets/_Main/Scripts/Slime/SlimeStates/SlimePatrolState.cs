@@ -24,7 +24,7 @@ public class SlimePatrolState<T> : State<T>
     }
     public override void Execute()
     {
-        Debug.Log("Wander");
+
         var canSee = _isSeen.Invoke();
         
         if (canSee)
