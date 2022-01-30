@@ -8,13 +8,14 @@ public class Daylight : MonoBehaviour
     [SerializeField] private DayEvent day;
     [SerializeField] private NightEvent night;
     private float _currRotX;
-
     public event Action OnNight;
     public event Action OnDay;
+    public static Daylight instance;
     
     // Start is called before the first frame update
     void Awake()
     {
+        instance = this;
         _transform = transform;
         _currRotX = _transform.rotation.x;
         SubscribeEvents();

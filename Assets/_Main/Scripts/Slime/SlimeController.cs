@@ -10,7 +10,6 @@ public class SlimeController : MonoBehaviour
     [SerializeField] private PlayerModel _target;
     [SerializeField] private float chaseCD; 
     [SerializeField] private float evadeCD;
-    [SerializeField] private Daylight _daylight;
 
 
     private bool dayNight;
@@ -49,8 +48,8 @@ public class SlimeController : MonoBehaviour
     void SubscribeEvents()
     {
         _slimeModel.OnDie += DieCommand;
-        _daylight.OnDay += () => dayNight = true;
-        _daylight.OnNight += () => dayNight = false;
+        Daylight.instance.OnDay += () => dayNight = true;
+        Daylight.instance.OnNight += () => dayNight = false;
     }
     #region Commands
     private void WalkCommand(Vector3 moveDir)

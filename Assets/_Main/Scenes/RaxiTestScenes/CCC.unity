@@ -250,23 +250,6 @@ MonoBehaviour:
     poolSize: 20
     objectToPool: {fileID: 4233500480253596039, guid: d7bcad9dfcec26945a45580d1d354e7e, type: 3}
     objectFather: {fileID: 1285976566}
---- !u!1 &201907993 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4192871230837287143, guid: a42743f2cf9fd2b4a862108e7f09964b, type: 3}
-  m_PrefabInstance: {fileID: 605024312888828078}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &201907994
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 201907993}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a1e1acdfbecd7c4e84361704cdaee9e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &283527415
 GameObject:
   m_ObjectHideFlags: 0
@@ -332,7 +315,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68bb026fafb42b14791938953eaace77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_NoiseProfile: {fileID: 11400000, guid: 69ce8388f6785dd4c8c39915efece2f4, type: 2}
+  m_NoiseProfile: {fileID: 11400000, guid: 46965f9cbaf525742a6da4c2172a99cd, type: 2}
   m_PivotOffset: {x: 0, y: 0, z: 0}
   m_AmplitudeGain: 1
   m_FrequencyGain: 1
