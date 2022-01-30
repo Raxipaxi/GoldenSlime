@@ -60,6 +60,7 @@ public class SlimeController : MonoBehaviour
         var patrol = new SlimePatrolState<EnemyStates>(CanSeeTarget, WalkCommand, _root,_target.transform, behaviour);
         var dead = new SlimeDieState<EnemyStates>(DieCommand);
         var idle = new SlimeIdleState<EnemyStates>(IdleCommand);
+        var chase = new SlimeChaseState<EnemyStates>(_target.transform, _root, behaviour, RunCommand, _slimeModel._stats.AttackCooldown);
         _fsm = new FSM<EnemyStates>();
         _fsm.SetInit(patrol);
     }
@@ -73,7 +74,7 @@ public class SlimeController : MonoBehaviour
 
         QuestionNode isOnReach = new QuestionNode(CanAttack, goToAttack, goToChase);
         QuestionNode isDayTime = new QuestionNode(DayTime, goToScape, isOnReach);
-        QuestionNode isOnPlayerSight = new QuestionNode(CanSeeTarget, isDayTime, goToPatrol);
+        QuestionNode isOnPlayerSight = new QuestionNode(CanSeeTarget, goToChase, goToPatrol);
         QuestionNode isRecentilySpawned = new QuestionNode(IsRecentlySpawned, isOnPlayerSight, null);
     }
 
@@ -97,10 +98,6 @@ public class SlimeController : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            _slimeModel.TakeDamage(50);
-        }
         _fsm.OnUpdate();
     }
 }

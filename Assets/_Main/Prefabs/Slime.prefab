@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8031889241536045250}
   - component: {fileID: 8044652263684749281}
   - component: {fileID: 6357597930521838888}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Sphere.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 624773032}
   - component: {fileID: 9963079}
   - component: {fileID: 9963078}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Slime
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -196,8 +196,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _stats: {fileID: 11400000, guid: e8475d469975a87478f746a4f126010e, type: 2}
-  positionsToSpawnX: {x: 0, y: 10}
-  positionsToSpawnZ: {x: 0, y: 10}
   _lineOfSight: {fileID: 624773032}
 --- !u!114 &624773032
 MonoBehaviour:
@@ -252,7 +250,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2905005865438207854}
   - component: {fileID: 2905005865438207853}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}

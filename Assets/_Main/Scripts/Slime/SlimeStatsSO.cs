@@ -12,4 +12,6 @@ using UnityEngine;
     public float MaxLife => _life;
     [SerializeField] private float _rotationSpeed;
     public float RotationSpeed => _rotationSpeed;
+    [SerializeField]private float attackCooldown;
+    public float AttackCooldown => attackCooldown; 
 }

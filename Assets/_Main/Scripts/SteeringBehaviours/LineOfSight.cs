@@ -10,13 +10,13 @@ public class LineOfSight : MonoBehaviour
         Vector3 diff = target.position - origin.position;
         float distance = diff.magnitude;
 
-        if(distance >= _stats.Range) { return false; }
-
+        if(distance >= _stats.Range) {return false; }
+        
         Vector3 front = origin.forward;
 
         if (!IsInVisionAngle(diff, front)) { return false; }
 
-        if (!isInView(diff.normalized, distance, _stats.ObstaclesMask)) { return false; }
+        if (isInView(diff.normalized, distance, _stats.ObstaclesMask)) {  return false; }
 
         return true;
     }

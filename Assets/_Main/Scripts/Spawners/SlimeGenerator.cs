@@ -7,16 +7,36 @@ public class SlimeGenerator : MonoBehaviour
     [SerializeField] private GameObject slimePrefab;
     [SerializeField] private float spawnRadius;
     [SerializeField] private int maxSpawnedSlimes;
-    private void Update()
+    [SerializeField] private int quantityPerRow;
+    [SerializeField] private DayEvent dayEvent;
+    private int slimeQuantity;
+    private void Start()
+    {
+        dayEvent.OnDay += SpawnSlime;
+    }
+    private Vector3 GenerateSlimesPos()
+    {
+        Vector3 spawnPosition = Random.insideUnitCircle * spawnRadius;
+        spawnPosition.y = 0;
+        return spawnPosition;
+    }
+    private void SpawnSlime()
     {
         
+        if(maxSpawnedSlimes <= slimeQuantity) { return; }
+        if(maxSpawnedSlimes > slimeQuantity)
+        {
+            for (int i = 0; i < quantityPerRow; i++)
+            {
+                slimeQuantity++;
+                GenericPool.Instance.SpawnFromPool("Slime", GenerateSlimesPos(), Quaternion.identity);
+                GenerateSlimesPos();
+            }
+        }
+
     }
-    private void SlimeCreator()
+    private void OnDrawGizmos()
     {
-        
-    }
-    private void SpawnSlime(Vector3 posToSpawn)
-    {
-        GenericPool.Instance.SpawnFromPool("Slime", posToSpawn, Quaternion.identity);
+        Gizmos.DrawWireSphere(transform.position, spawnRadius);
     }
 }

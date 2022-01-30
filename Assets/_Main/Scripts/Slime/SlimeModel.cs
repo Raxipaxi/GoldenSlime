@@ -7,8 +7,6 @@ public class SlimeModel : Actor, IPooleable
 {
     #region Properties
     [SerializeField] public SlimeStatsSO _stats;
-    [SerializeField] private Vector2 positionsToSpawnX;
-    [SerializeField] private Vector2 positionsToSpawnZ;
     private float _currentSpeed;
     public float CurrentSpeed => _currentSpeed;
     public event Action OnDie;
@@ -66,8 +64,7 @@ public class SlimeModel : Actor, IPooleable
     #region Damagable Methods
     public override void Die()
     {
-        Vector3 randomSpawnPos = new Vector3(Random.Range(positionsToSpawnX.x,positionsToSpawnX.y),transform.position.y,Random.Range(positionsToSpawnZ.x,positionsToSpawnZ.y));
-        GenericPool.Instance.SpawnFromPool("Slime",randomSpawnPos, Quaternion.identity);
+
         OnDie.Invoke();
         gameObject.SetActive(false);
     }
