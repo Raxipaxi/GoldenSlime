@@ -33,6 +33,7 @@ public class Daylight : MonoBehaviour
     }    
     void NightCommand()
     {
+        HudManager.instance.UpdateNights();
         OnNight?.Invoke();
     }
 

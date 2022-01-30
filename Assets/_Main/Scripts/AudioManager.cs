@@ -54,8 +54,8 @@ public class AudioManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
 
-        musicAudioSource.volume = musicInitialVolumen;
-        musicAudioSource.clip = music;
+        //musicAudioSource.volume = musicInitialVolumen;
+        //musicAudioSource.clip = music;
         //musicAudioSource.Play(); //TODO: Poner musica
     }
 
