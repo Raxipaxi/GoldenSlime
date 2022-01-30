@@ -48,9 +48,9 @@ public class PlayerController : MonoBehaviour
         shoot.AddTransition(PlayerStatesEnum.Idle, idle);
         shoot.AddTransition(PlayerStatesEnum.Walk, walk);
 
-        _fsm = new FSM<PlayerStatesEnum>();
+        _fsm = new FSM<PlayerStatesEnum>(idle);
         // Set init state
-        _fsm.SetInit(idle);
+        
 
     }
 
@@ -70,7 +70,7 @@ public class PlayerController : MonoBehaviour
     
     void Update()
     {
-        _fsm.OnUpdate();   
+        _fsm.UpdateState();   
     }
 
 

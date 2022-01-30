@@ -1,27 +1,28 @@
-﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-class QuestionNode : INode
+using UnityEngine;
+using System;
+public class QuestionNode : INode
 {
     private Func<bool> _question;
-    private INode _trueResult;
-    private INode _falseResult;
-    public void Execute()
+    private INode _trueNode, _falseNode;
+
+    public QuestionNode (Func <bool> question, INode trueNode,INode falseNode)
     {
-        if(_question != null)
+        _question = question;
+        _trueNode = trueNode;
+        _falseNode = falseNode;
+    }
+
+    public void Execute()
+    {   
+        if (_question())
         {
-            _trueResult.Execute();
+            _trueNode.Execute();
         }
         else
         {
-            _falseResult.Execute();
+            _falseNode.Execute();
         }
     }
-
-    public QuestionNode(Func<bool> question,INode trueResult,INode falseResult)
-    {
-        _question = question;
-        _trueResult = trueResult;
-        _falseResult = falseResult;
-    }
-
 }

@@ -63,7 +63,7 @@ public class SlimeController : MonoBehaviour
     }
     public void DieCommand()
     {
-        _fsm.Transition(EnemyStates.Patrol);
+        //_fsm.Transition(EnemyStates.Patrol);
     }
     private void RunCommand(Vector3 dir)
     {
@@ -81,9 +81,9 @@ public class SlimeController : MonoBehaviour
         var patrol = new SlimePatrolState<EnemyStates>(CanSeeTarget, WalkCommand, _root,_target.transform, behaviour);
         var dead = new SlimeDieState<EnemyStates>(DieCommand);
         var idle = new SlimeIdleState<EnemyStates>(IdleCommand);
-        var chase = new SlimeChaseEvadeState<EnemyStates>(_target.transform, RunCommand, CanSeeTarget, behaviour,
+        var chase = new SlimeChaseEvadeState<EnemyStates>(_target.transform, RunCommand, behaviour,
            ObstacleAvoidance.Steering.Chase, chaseCD, _root);
-        var evade = new SlimeChaseEvadeState<EnemyStates>(_target.transform, RunCommand, CanSeeTarget, behaviour,
+        var evade = new SlimeChaseEvadeState<EnemyStates>(_target.transform, RunCommand, behaviour,
            ObstacleAvoidance.Steering.Evade, evadeCD, _root);
         var attack = new SlimeAttackState<EnemyStates>(AttackCommand, _slimeModel._stats.AttackCooldown,
             _slimeModel._stats.AttackDamage, _root);
@@ -127,17 +127,17 @@ public class SlimeController : MonoBehaviour
         attack.AddTransition(EnemyStates.Die, dead);
         attack.AddTransition(EnemyStates.Evade, evade);
 
-        _fsm = new FSM<EnemyStates>();
-        _fsm.SetInit(patrol);
+        _fsm = new FSM<EnemyStates>(patrol);
+       
     }
     private void InitDecisionTree()
     {
         // Actions
-        var goToIdle = new ActionNode(() => _fsm.Transition(EnemyStates.Idle));
-        var goToPatrol = new ActionNode(() => _fsm.Transition(EnemyStates.Patrol));
-        var goToAttack = new ActionNode(() => _fsm.Transition(EnemyStates.Attack));
-        var goToChase = new ActionNode(() => _fsm.Transition(EnemyStates.Follow));
-        var goToScape = new ActionNode(() => _fsm.Transition(EnemyStates.Evade));
+    //    var goToIdle = new ActionNode( () => _fsm.Transition(EnemyStates.Idle));
+        var goToPatrol = new ActionNode( () => _fsm.Transition(EnemyStates.Patrol));
+        var goToAttack = new ActionNode( () => _fsm.Transition(EnemyStates.Attack));
+        var goToChase = new ActionNode (() => _fsm.Transition(EnemyStates.Follow));
+        var goToScape = new ActionNode( () => _fsm.Transition(EnemyStates.Evade));
 
         
         // Questions
@@ -146,17 +146,17 @@ public class SlimeController : MonoBehaviour
         QuestionNode isDayTime = new QuestionNode(DayTime, goToScape, isOnReach);
         QuestionNode isPlayerSight = new QuestionNode(CanSeeTarget, isDayTime, goToPatrol);
         QuestionNode isPlayerAlive = new QuestionNode(PlayerAlive, isPlayerSight, goToPatrol);
-        QuestionNode isRecentilySpawned = new QuestionNode(IsRecentlySpawned, isPlayerSight, null);
+       // QuestionNode isRecentilySpawned = new QuestionNode(IsRecentlySpawned, isPlayerSight, null);
 
         _root = isPlayerAlive;
     }
 
-    private bool CanAttack()
+    public bool CanAttack()
     {
 
         return CanAttack();
     }
-    private bool DayTime()
+    public bool DayTime()
     {
         Debug.Log("Es de dia " + dayNight);
         return dayNight;
@@ -168,7 +168,7 @@ public class SlimeController : MonoBehaviour
     public bool CanSeeTarget()
     {
         var playerInSight = _slimeModel.LineOfSight.CanSeeSomeone(_target.transform);
-       // Debug.Log("Te veo " + playerInSight);
+         Debug.Log("Te veo " + playerInSight);
         return playerInSight;
     }
 
@@ -179,6 +179,6 @@ public class SlimeController : MonoBehaviour
     }
     private void Update()
     {
-        _fsm.OnUpdate();
+        _fsm.UpdateState();
     }
 }
