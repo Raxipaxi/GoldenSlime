@@ -33,7 +33,8 @@ public class SlimeModel : Actor, IPooleable
         controller.OnRun += Run;
         controller.OnWalk += Walk;
         controller.OnIdle += Idle;
-        
+        controller.OnAttack += Attack;
+
     }
 
     #region Mobile Methods

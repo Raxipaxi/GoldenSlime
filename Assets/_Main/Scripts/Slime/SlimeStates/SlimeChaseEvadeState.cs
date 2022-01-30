@@ -41,6 +41,7 @@ public class SlimeChaseEvadeState<T> : State<T>
 
     public override void Execute()
     {
+        Debug.Log(_steering);
         var dir = _obst.GetDir();
         _behave?.Invoke(dir);
 

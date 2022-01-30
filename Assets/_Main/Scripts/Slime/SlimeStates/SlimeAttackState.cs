@@ -4,35 +4,34 @@ using System;
 public class SlimeAttackState<T> : State<T>
 {
     private INode _root;
-    private Action<Vector3> _onWalk;
-    private Func<bool> _isSeen;
-    private Transform _transform;
-    private float _minDistance;
-    private ObstacleAvoidance _obstacleAvoidance;
-    
-    public SlimeAttackState(Action<float> o, ,INode root)
+    private Action<float> _onAttack;
+    private float _counter;
+    private float _damage;
+    private float _timeToAttack;
+
+    public SlimeAttackState(Action<float> onAttack, float timeToAttack, float damage ,INode root)
     {
-        _isSeen = isSeen;
+        _onAttack = onAttack;
+        _damage = damage;
+        _timeToAttack = timeToAttack;
         _root = root;
-        _onWalk = onWalk;
-        _transform = transform;
-        _obstacleAvoidance = obstacleAvoidance;
 
     }
     public override void Awake()
     {
-        _obstacleAvoidance.SetNewBehaviour(ObstacleAvoidance.Steering.Wander);
+        ResetCounter();
+        _onAttack?.Invoke(_damage);
+    }
+    private void ResetCounter()
+    {
+        _counter = _timeToAttack;
     }
     public override void Execute()
     {
-        var canSee = _isSeen.Invoke();
-        if (canSee)
-        {
-            _root.Execute();
-            return;
-        }
-        var dir = _obstacleAvoidance.GetDir();
-         dir.y = 0;
-        _onWalk?.Invoke(dir);
+        _counter -= Time.deltaTime;
+        
+        if (_counter > 0) return;
+  
+        _root.Execute();
     }
 }

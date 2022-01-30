@@ -31,7 +31,7 @@ public class ShotGun : MonoBehaviour
             
             pelletInst.transform.rotation = Quaternion.RotateTowards(pelletInst.transform.rotation, pellets[index],spreadAngle);
             pelletInst.GetComponent<PelletDmg>().SetDamage(damage);
-            pelletInst.GetComponent<Rigidbody>().AddForce(pelletInst.transform.forward * pelletVel);
+            pelletInst.GetComponent<Rigidbody>().AddForce(pelletInst.transform.up * pelletVel);
             index++;
         }
    

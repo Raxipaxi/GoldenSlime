@@ -6,12 +6,18 @@ using UnityEngine;
     {
     [SerializeField] private float _walkSpeed;
     public float WalkSpeed => _walkSpeed;
-    [SerializeField] private float _runSpeed;
+    [SerializeField] private float _runSpeed; 
     public float RunSpeed => _runSpeed;
+    
     [SerializeField] private float _life;
     public float MaxLife => _life;
-    [SerializeField] private float _rotationSpeed;
+    
+    [SerializeField] private float _rotationSpeed; 
     public float RotationSpeed => _rotationSpeed;
+    
     [SerializeField]private float attackCooldown;
-    public float AttackCooldown => attackCooldown; 
-}
+    public float AttackCooldown => attackCooldown;
+    
+    [SerializeField] private float attackDamage;
+    public float AttackDamage => attackDamage;
+    }

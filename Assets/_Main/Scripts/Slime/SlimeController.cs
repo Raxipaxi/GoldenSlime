@@ -26,7 +26,7 @@ public class SlimeController : MonoBehaviour
     public event Action<Vector3> OnWalk;
     public event Action OnIdle;
     public event Action<Vector3> OnRun;
-    public event Action OnAttack;
+    public event Action<float> OnAttack;
     public event Action OnDie, OnHit;
 
     private void Awake()
@@ -70,6 +70,11 @@ public class SlimeController : MonoBehaviour
     {
         OnRun?.Invoke(dir);
     }
+
+    private void AttackCommand(float damage)
+    {
+        OnAttack?.Invoke(damage);
+    }
     #endregion
     private void FsmInit()
     {
@@ -81,6 +86,8 @@ public class SlimeController : MonoBehaviour
            ObstacleAvoidance.Steering.Chase, chaseCD, _root);
         var evade = new SlimeChaseEvadeState<EnemyStates>(_target.transform, RunCommand, CanSeeTarget, behaviour,
            ObstacleAvoidance.Steering.Flee, evadeCD, _root);
+        var attack = new SlimeAttackState<EnemyStates>(AttackCommand, _slimeModel._stats.AttackCooldown,
+            _slimeModel._stats.AttackDamage, _root);
         
        
         // Idle
@@ -88,6 +95,7 @@ public class SlimeController : MonoBehaviour
         idle.AddTransition(EnemyStates.Chase, chase);
         idle.AddTransition(EnemyStates.Evade, evade);
         idle.AddTransition(EnemyStates.Die,dead);
+        idle.AddTransition(EnemyStates.Attack,attack);
 
         
         // Patrol
@@ -95,6 +103,7 @@ public class SlimeController : MonoBehaviour
         patrol.AddTransition(EnemyStates.Evade, evade);
         patrol.AddTransition(EnemyStates.Idle, idle);
         patrol.AddTransition(EnemyStates.Die, dead);
+        patrol.AddTransition(EnemyStates.Attack, attack);
 
         
         // Chase
@@ -102,6 +111,7 @@ public class SlimeController : MonoBehaviour
         chase.AddTransition(EnemyStates.Evade, evade);
         chase.AddTransition(EnemyStates.Idle, idle);
         chase.AddTransition(EnemyStates.Die, dead);
+        chase.AddTransition(EnemyStates.Attack, attack);
         
         
         // Evade
@@ -109,7 +119,14 @@ public class SlimeController : MonoBehaviour
         evade.AddTransition(EnemyStates.Chase, chase);
         evade.AddTransition(EnemyStates.Idle, idle);
         evade.AddTransition(EnemyStates.Die, dead);
+        evade.AddTransition(EnemyStates.Attack, attack);
         
+        //Attack
+        attack.AddTransition(EnemyStates.Patrol, patrol);
+        attack.AddTransition(EnemyStates.Chase, chase);
+        attack.AddTransition(EnemyStates.Idle, idle);
+        attack.AddTransition(EnemyStates.Die, dead);
+        attack.AddTransition(EnemyStates.Evade, evade);
 
         _fsm = new FSM<EnemyStates>();
         _fsm.SetInit(patrol);
