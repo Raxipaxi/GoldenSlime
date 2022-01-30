@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.3731193, g: 0.38073996, b: 0.35872698, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -766,14 +766,46 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 605024313215176264, guid: a42743f2cf9fd2b4a862108e7f09964b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -19.025114
+      objectReference: {fileID: 0}
+    - target: {fileID: 605024313215176264, guid: a42743f2cf9fd2b4a862108e7f09964b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 4.5810146
+      objectReference: {fileID: 0}
+    - target: {fileID: 605024313215176264, guid: a42743f2cf9fd2b4a862108e7f09964b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.45155996
+      objectReference: {fileID: 0}
+    - target: {fileID: 605024313215176267, guid: a42743f2cf9fd2b4a862108e7f09964b, type: 3}
+      propertyPath: orthographic size
+      value: 5.68
+      objectReference: {fileID: 0}
     - target: {fileID: 1875463689368674956, guid: a42743f2cf9fd2b4a862108e7f09964b, type: 3}
       propertyPath: m_Name
       value: CamSystem
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534308515773934966, guid: a42743f2cf9fd2b4a862108e7f09964b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -19.025114
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534308515773934966, guid: a42743f2cf9fd2b4a862108e7f09964b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 4.5810146
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534308515773934966, guid: a42743f2cf9fd2b4a862108e7f09964b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.45155996
       objectReference: {fileID: 0}
     - target: {fileID: 5433619517803959411, guid: a42743f2cf9fd2b4a862108e7f09964b, type: 3}
       propertyPath: m_Follow
       value: 
       objectReference: {fileID: 1870891000}
+    - target: {fileID: 5433619517803959411, guid: a42743f2cf9fd2b4a862108e7f09964b, type: 3}
+      propertyPath: m_Lens.OrthographicSize
+      value: 5.68
+      objectReference: {fileID: 0}
     - target: {fileID: 6413371608553859897, guid: a42743f2cf9fd2b4a862108e7f09964b, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -818,7 +850,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8036968157976768772, guid: a42743f2cf9fd2b4a862108e7f09964b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: a42743f2cf9fd2b4a862108e7f09964b, type: 3}
 --- !u!1001 &503206417
 PrefabInstance:
