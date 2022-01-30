@@ -864,14 +864,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 624773030, guid: 0f5dc634264f2cc439e3bde06f157f26, type: 3}
-      propertyPath: _target
-      value: 
-      objectReference: {fileID: 1216764639}
-    - target: {fileID: 624773030, guid: 0f5dc634264f2cc439e3bde06f157f26, type: 3}
-      propertyPath: _daylight
-      value: 
-      objectReference: {fileID: 1665503921}
     - target: {fileID: 2635114447334557700, guid: 0f5dc634264f2cc439e3bde06f157f26, type: 3}
       propertyPath: m_Name
       value: Slime
@@ -1092,17 +1084,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e07774e6fe379a447b7ae0bf972cf69b, type: 3}
---- !u!114 &1665503921 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4641348028659966174, guid: e07774e6fe379a447b7ae0bf972cf69b, type: 3}
-  m_PrefabInstance: {fileID: 1526883780}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bdd154ac4eb21a94996e60170fd774e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1870891000 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8172162775985534722, guid: 1a4963899272b154c890240285591ebb, type: 3}
