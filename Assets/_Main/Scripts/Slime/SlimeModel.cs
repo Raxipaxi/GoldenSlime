@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
-public class SlimeModel:Actor
+public class SlimeModel : Actor, IPooleable
 {
     #region Properties
     [SerializeField] public SlimeStatsSO _stats;
+    [SerializeField] private Vector2 positionsToSpawnX;
+    [SerializeField] private Vector2 positionsToSpawnZ;
     private float _currentSpeed;
     public float CurrentSpeed => _currentSpeed;
-    private event Action OnDie;
-    
+    public event Action OnDie;
+
     private float _currentLife;
     public float CurrentLife => _currentLife;
     private Transform _transform;
@@ -31,8 +34,8 @@ public class SlimeModel:Actor
 
         controller.OnRun += Run;
         controller.OnWalk += Walk;
+        controller.OnIdle += Idle;
         
-
     }
 
     #region Mobile Methods
@@ -41,9 +44,12 @@ public class SlimeModel:Actor
     {
         var normalizedDir = dir.normalized;
         transform.rotation = Quaternion.Slerp(_transform.rotation, Quaternion.LookRotation(dir), _stats.RotationSpeed);
-        _rb.velocity =  new Vector3(normalizedDir.x*CurrentSpeed,_rb.velocity.y,normalizedDir.z*CurrentSpeed);
+        _rb.velocity = new Vector3(normalizedDir.x * CurrentSpeed, _rb.velocity.y, normalizedDir.z * CurrentSpeed);
     }
-
+    public void Idle(Vector3 dir)
+    {
+        _currentSpeed = 0;
+    }
     public void Walk(Vector3 dir)
     {
         _currentSpeed = _stats.WalkSpeed;
@@ -56,24 +62,34 @@ public class SlimeModel:Actor
         Move(dir);
 
     }
-    
+    #endregion
     #region Damagable Methods
     public override void Die()
     {
-        OnDie?.Invoke();
-        Destroy(gameObject);
-       // Habria que hacer un pool que se comunique con esto
+        Vector3 randomSpawnPos = new Vector3(Random.Range(positionsToSpawnX.x,positionsToSpawnX.y),transform.position.y,Random.Range(positionsToSpawnZ.x,positionsToSpawnZ.y));
+        GenericPool.Instance.SpawnFromPool("Slime",randomSpawnPos, Quaternion.identity);
+        OnDie.Invoke();
+        gameObject.SetActive(false);
     }
     public override void TakeDamage(float dmg)
     {
-       _currentLife -= dmg;
+        _currentLife -= dmg;
         if (_currentLife <= 0)
         {
             Die();
         }
     }
+    public void Reset()
+    {
+        _currentLife = MaxLife;
+    }
 
+    public void OnObjectSpawn()
+    {
+        Reset();
+    }
     #endregion
-#endregion
+
+    
 }
 

@@ -17,6 +17,7 @@ public class SlimeController : MonoBehaviour
 
     //ublic event Action<Vector3> OnMove;
     public event Action<Vector3> OnWalk;
+    public event Action OnIdle;
     public event Action<Vector3> OnRun;
     public event Action OnAttack;
     public event Action OnDie, OnHit;
@@ -31,6 +32,7 @@ public class SlimeController : MonoBehaviour
 
     private void Start()
     {
+        _slimeModel.OnDie += DieCommand;
         _slimeModel.Suscribe(this);
         FsmInit();  
         InitDecisionTree();
@@ -40,6 +42,14 @@ public class SlimeController : MonoBehaviour
     {
         OnWalk?.Invoke(moveDir);
     }
+    private void IdleCommand()
+    {
+        OnIdle.Invoke();
+    }
+    public void DieCommand()
+    {
+        _fsm.Transition(EnemyStates.Patrol);
+    }
     private void RunCommand(Vector3 dir)
     {
         OnRun?.Invoke(dir);
@@ -48,19 +58,23 @@ public class SlimeController : MonoBehaviour
     private void FsmInit()
     {
         var patrol = new SlimePatrolState<EnemyStates>(CanSeeTarget, WalkCommand, _root,_target.transform, behaviour);
+        var dead = new SlimeDieState<EnemyStates>(DieCommand);
+        var idle = new SlimeIdleState<EnemyStates>(IdleCommand);
         _fsm = new FSM<EnemyStates>();
         _fsm.SetInit(patrol);
     }
     private void InitDecisionTree()
     {
-        var goToIdle = new ActionNode(() => _fsm.Transition(EnemyStates.Patrol));
+        var goToIdle = new ActionNode(() => _fsm.Transition(EnemyStates.Idle));
+        var goToPatrol = new ActionNode(() => _fsm.Transition(EnemyStates.Patrol));
         var goToAttack = new ActionNode(() => _fsm.Transition(EnemyStates.Attack));
         var goToChase = new ActionNode(() => _fsm.Transition(EnemyStates.Follow));
         var goToScape = new ActionNode(() => _fsm.Transition(EnemyStates.Escape));
 
         QuestionNode isOnReach = new QuestionNode(CanAttack, goToAttack, goToChase);
         QuestionNode isDayTime = new QuestionNode(DayTime, goToScape, isOnReach);
-        QuestionNode isOnPlayerSight = new QuestionNode(CanSeeTarget, isDayTime, goToIdle);
+        QuestionNode isOnPlayerSight = new QuestionNode(CanSeeTarget, isDayTime, goToPatrol);
+        QuestionNode isRecentilySpawned = new QuestionNode(IsRecentlySpawned, isOnPlayerSight, null);
     }
 
     private bool CanAttack()
@@ -72,6 +86,10 @@ public class SlimeController : MonoBehaviour
     {
         return DayTime();
     }
+    private bool IsRecentlySpawned()
+    {
+        return true;
+    }
     public bool CanSeeTarget()
     {
         var playerInSight = _slimeModel.LineOfSight.CanSeeSomeone(_target.transform);
@@ -79,6 +97,10 @@ public class SlimeController : MonoBehaviour
     }
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            _slimeModel.TakeDamage(50);
+        }
         _fsm.OnUpdate();
     }
 }
