@@ -125,9 +125,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1d5ab1b417c4a129cc1a99b40d4bb2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pelletCount: 5
+  maxAmmo: 10
   spreadAngle: 45
   pelletVel: 500
   pellet: {fileID: 4233500480253596039, guid: d7bcad9dfcec26945a45580d1d354e7e, type: 3}
   barrelExit: {fileID: 27319015272397703}
   offset: {x: 0, y: 0, z: 0}
+  currentAmmo: 0

@@ -29,8 +29,8 @@ public class SlimeGenerator : MonoBehaviour
             for (int i = 0; i < quantityPerRow; i++)
             {
                 slimeQuantity++;
-                GenericPool.Instance.SpawnFromPool("Slime", GenerateSlimesPos(), Quaternion.identity);
                 GenerateSlimesPos();
+                GenericPool.Instance.SpawnFromPool("Slime", GenerateSlimesPos(), Quaternion.identity);
             }
         }
 
