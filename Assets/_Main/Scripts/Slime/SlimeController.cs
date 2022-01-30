@@ -136,7 +136,7 @@ public class SlimeController : MonoBehaviour
     //    var goToIdle = new ActionNode( () => _fsm.Transition(EnemyStates.Idle));
         var goToPatrol = new ActionNode( () => _fsm.Transition(EnemyStates.Patrol));
         var goToAttack = new ActionNode( () => _fsm.Transition(EnemyStates.Attack));
-        var goToChase = new ActionNode (() => _fsm.Transition(EnemyStates.Follow));
+        var goToChase = new ActionNode (() => _fsm.Transition(EnemyStates.Chase));
         var goToScape = new ActionNode( () => _fsm.Transition(EnemyStates.Evade));
 
         
@@ -153,8 +153,10 @@ public class SlimeController : MonoBehaviour
 
     public bool CanAttack()
     {
-
-        return CanAttack();
+        var canAttack = Vector3.Distance(transform.position,_target.transform.position)<2f;
+        
+        Debug.Log(canAttack);
+        return canAttack;
     }
     public bool DayTime()
     {
@@ -168,7 +170,7 @@ public class SlimeController : MonoBehaviour
     public bool CanSeeTarget()
     {
         var playerInSight = _slimeModel.LineOfSight.CanSeeSomeone(_target.transform);
-
+        if (!PlayerAlive()) playerInSight = false;
         return playerInSight;
     }
 

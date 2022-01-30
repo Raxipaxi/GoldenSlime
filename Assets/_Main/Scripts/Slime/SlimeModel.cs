@@ -17,6 +17,7 @@ public class SlimeModel : Actor, IPooleable
     private Rigidbody _rb;
     [SerializeField] private LineOfSight _lineOfSight;
     public LineOfSight LineOfSight => _lineOfSight;
+    [SerializeField] private LayerMask playerMask;
     #endregion
 
     private void Awake()
@@ -55,6 +56,16 @@ public class SlimeModel : Actor, IPooleable
         Move(dir);
 
     }
+
+    public override void Attack(float dmg)
+    {
+        var player = Physics.OverlapSphere(transform.position, 1.5f, playerMask);
+        if (player[0]!=null)
+        {
+            player[0].GetComponent<iDamageable>()?.TakeDamage(dmg);
+        }
+    }
+
     public void Run(Vector3 dir)
     {
         _currentSpeed = _stats.RunSpeed;

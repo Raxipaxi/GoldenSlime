@@ -28,7 +28,7 @@ public class SlimeAttackState<T> : State<T>
     }
     public override void Execute()
     {
-        Debug.Log("Attack");
+       
         _counter -= Time.deltaTime;
         
         if (_counter > 0) return;

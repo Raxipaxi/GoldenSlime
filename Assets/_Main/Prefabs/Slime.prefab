@@ -199,6 +199,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _stats: {fileID: 11400000, guid: e8475d469975a87478f746a4f126010e, type: 2}
   _lineOfSight: {fileID: 624773032}
+  playerMask:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!114 &624773032
 MonoBehaviour:
   m_ObjectHideFlags: 0

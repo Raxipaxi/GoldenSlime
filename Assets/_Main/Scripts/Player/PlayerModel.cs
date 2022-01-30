@@ -139,6 +139,7 @@ public class PlayerModel : Actor
         return CurrentLife > 0;
     }
 
+    
     #endregion
 
     public float Vel => _currSpeed;
