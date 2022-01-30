@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 536307456}
   - component: {fileID: 536307455}
   - component: {fileID: 536307454}
+  - component: {fileID: 536307452}
   m_Layer: 11
   m_Name: GoldenSlime
   m_TagString: Untagged
@@ -192,6 +193,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   origin: {fileID: 6361434983701460110}
   _stats: {fileID: 11400000, guid: 608e419dbb1f29d4089d7afb352785d8, type: 2}
+--- !u!136 &536307452
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1418235296028122184}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.2919552
+  m_Height: 1.4130702
+  m_Direction: 1
+  m_Center: {x: 0.0008212328, y: 0.0796392, z: 0.007509887}
 --- !u!1 &2265306959623473955
 GameObject:
   m_ObjectHideFlags: 0
