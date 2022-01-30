@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
 
     public void PlayGame()
     {
-        SceneManager.LoadScene("Level");
+        SceneManager.LoadScene(1);
     }
     public void MainMenue()
     {
