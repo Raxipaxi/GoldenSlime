@@ -17,3 +17,4 @@ MonoBehaviour:
   _life: 10
   _rotationSpeed: 1
   attackCooldown: 1
+  attackDamage: 5
