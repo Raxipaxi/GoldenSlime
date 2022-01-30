@@ -36,4 +36,8 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene("Lose");
     }
+    public void ExitScreen()
+    {
+        Application.Quit();
+    }
 }

@@ -122,6 +122,7 @@ public class PlayerModel : Actor
     #region Damageable Methods
     public override void Die()
     {
+        GameManager.instance.LoseScreen();
         OnDie?.Invoke();
         Destroy(gameObject);
     }

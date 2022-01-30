@@ -19,6 +19,10 @@ public class HudManager : MonoBehaviour
     public void UpdateNights()
     {
         currentnight++;
+        if(currentnight == 4)
+        {
+            GameManager.instance.LoseScreen();
+        }
         nights.text = currentnight.ToString();
     }
 

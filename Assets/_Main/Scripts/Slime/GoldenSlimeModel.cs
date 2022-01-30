@@ -67,6 +67,7 @@ public class GoldenSlimeModel : Actor, IPooleable
     {
 
         OnDie.Invoke();
+        GameManager.instance.Victory();
         Destroy(this);
     }
     public override void TakeDamage(float dmg)
