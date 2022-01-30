@@ -84,12 +84,18 @@ public class ObstacleAvoidance: ISteering
     {
         _currentBehaviour = behaviours[newBehaviourKey];
     }
-    public Transform SetTarget 
+    public void SetNewTarget(Transform _newTarget)
     {
-        set
+        foreach (var behaviour in behaviours)
         {
-            _target = value;
+            behaviour.Value.SetTarget = _newTarget;            
         }
+
+    }
+
+    public Transform SetTarget
+    {
+        set => _target = value;
     }
 }
 

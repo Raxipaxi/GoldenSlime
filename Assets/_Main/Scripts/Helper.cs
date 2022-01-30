@@ -11,7 +11,9 @@ public enum EnemyStates
     Patrol,
     Follow,
     Attack,
-    Escape
+    Chase,
+    Evade,
+    Die
 }
 
 public class LittleKinghtAnim

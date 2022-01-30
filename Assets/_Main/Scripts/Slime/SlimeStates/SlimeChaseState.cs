@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using System;
-public class SlimeChaseState<T> : State<T>
+public class SlimeChaseState<T> : State<T> // Todo borrar
 {
     private Transform _target;
 

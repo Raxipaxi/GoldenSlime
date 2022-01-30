@@ -8,7 +8,14 @@ public class SlimeController : MonoBehaviour
     private FSM<EnemyStates> _fsm;
     private SlimeModel _slimeModel;
     [SerializeField] private PlayerModel _target;
+    [SerializeField] private float chaseCD; 
+    [SerializeField] private float evadeCD;
+    [SerializeField] private Daylight _daylight;
 
+
+    private bool dayNight;
+    
+    
     [SerializeField] private ObstacleAvoidanceSO avoidtats;
     private INode _root;
 
@@ -32,16 +39,25 @@ public class SlimeController : MonoBehaviour
 
     private void Start()
     {
-        _slimeModel.OnDie += DieCommand;
+        SubscribeEvents();
+        
         _slimeModel.Suscribe(this);
         InitDecisionTree();
         FsmInit();  
+    }
+
+    void SubscribeEvents()
+    {
+        _slimeModel.OnDie += DieCommand;
+        _daylight.OnDay += () => dayNight = true;
+        _daylight.OnNight += () => dayNight = false;
     }
     #region Commands
     private void WalkCommand(Vector3 moveDir)
     {
         OnWalk?.Invoke(moveDir);
     }
+    
     private void IdleCommand()
     {
         OnIdle.Invoke();
@@ -57,35 +73,64 @@ public class SlimeController : MonoBehaviour
     #endregion
     private void FsmInit()
     {
+        // States
         var patrol = new SlimePatrolState<EnemyStates>(CanSeeTarget, WalkCommand, _root,_target.transform, behaviour);
         var dead = new SlimeDieState<EnemyStates>(DieCommand);
         var idle = new SlimeIdleState<EnemyStates>(IdleCommand);
-        var chase = new SlimeChaseState<EnemyStates>(_target.transform, _root, behaviour, RunCommand, _slimeModel._stats.AttackCooldown);
-
+        var chase = new SlimeChaseEvadeState<EnemyStates>(_target.transform, RunCommand, CanSeeTarget, behaviour,
+           ObstacleAvoidance.Steering.Chase, chaseCD, _root);
+        var evade = new SlimeChaseEvadeState<EnemyStates>(_target.transform, RunCommand, CanSeeTarget, behaviour,
+           ObstacleAvoidance.Steering.Flee, evadeCD, _root);
+        
+       
+        // Idle
         idle.AddTransition(EnemyStates.Patrol, patrol);
+        idle.AddTransition(EnemyStates.Chase, chase);
+        idle.AddTransition(EnemyStates.Evade, evade);
+        idle.AddTransition(EnemyStates.Die,dead);
 
-        patrol.AddTransition(EnemyStates.Follow, chase);
+        
+        // Patrol
+        patrol.AddTransition(EnemyStates.Chase, chase);
+        patrol.AddTransition(EnemyStates.Evade, evade);
+        patrol.AddTransition(EnemyStates.Idle, idle);
+        patrol.AddTransition(EnemyStates.Die, dead);
 
+        
+        // Chase
         chase.AddTransition(EnemyStates.Patrol, patrol);
-        dead.AddTransition(EnemyStates.Idle, idle);
+        chase.AddTransition(EnemyStates.Evade, evade);
+        chase.AddTransition(EnemyStates.Idle, idle);
+        chase.AddTransition(EnemyStates.Die, dead);
+        
+        
+        // Evade
+        evade.AddTransition(EnemyStates.Patrol, patrol);
+        evade.AddTransition(EnemyStates.Chase, chase);
+        evade.AddTransition(EnemyStates.Idle, idle);
+        evade.AddTransition(EnemyStates.Die, dead);
+        
 
         _fsm = new FSM<EnemyStates>();
         _fsm.SetInit(patrol);
     }
     private void InitDecisionTree()
     {
+        // Actions
         var goToIdle = new ActionNode(() => _fsm.Transition(EnemyStates.Idle));
         var goToPatrol = new ActionNode(() => _fsm.Transition(EnemyStates.Patrol));
         var goToAttack = new ActionNode(() => _fsm.Transition(EnemyStates.Attack));
         var goToChase = new ActionNode(() => _fsm.Transition(EnemyStates.Follow));
-        var goToScape = new ActionNode(() => _fsm.Transition(EnemyStates.Escape));
+        var goToScape = new ActionNode(() => _fsm.Transition(EnemyStates.Evade));
 
-
-        QuestionNode isPlayerAlive = new QuestionNode(_target.IsAlive, goToPatrol, goToIdle);
+        
+        // Questions
+        
         QuestionNode isOnReach = new QuestionNode(CanAttack, goToAttack, goToChase);
         QuestionNode isDayTime = new QuestionNode(DayTime, goToScape, isOnReach);
-        QuestionNode isOnPlayerSight = new QuestionNode(CanSeeTarget, goToChase, goToPatrol);
-        QuestionNode isRecentilySpawned = new QuestionNode(IsRecentlySpawned, isOnPlayerSight, null);
+        QuestionNode isPlayerSight = new QuestionNode(CanSeeTarget, isDayTime, goToPatrol);
+        QuestionNode isPlayerAlive = new QuestionNode(PlayerAlive, isPlayerSight, goToPatrol);
+        QuestionNode isRecentilySpawned = new QuestionNode(IsRecentlySpawned, isPlayerSight, null);
 
         _root = isPlayerAlive;
     }
@@ -97,7 +142,7 @@ public class SlimeController : MonoBehaviour
     }
     private bool DayTime()
     {
-        return DayTime();
+        return dayNight;
     }
     private bool IsRecentlySpawned()
     {
@@ -107,6 +152,11 @@ public class SlimeController : MonoBehaviour
     {
         var playerInSight = _slimeModel.LineOfSight.CanSeeSomeone(_target.transform);
         return playerInSight;
+    }
+
+    public bool PlayerAlive()
+    {
+        return _target.IsAlive();
     }
     private void Update()
     {
