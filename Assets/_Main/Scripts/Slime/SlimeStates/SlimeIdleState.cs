@@ -11,6 +11,7 @@ public class SlimeIdleState<T> : State<T>
 
     public override void Execute()
     {
+        Debug.Log("Idle");
         _onIdle.Invoke();
     }
 }
