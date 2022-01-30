@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        if(instance != null)
+        if (instance != null)
         {
             Destroy(gameObject);
         }
@@ -17,27 +17,25 @@ public class GameManager : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(gameObject);
         }
+        Cursor.visible = false;
     }
 
-
-    public void PlayGame()
+    private void Update()
     {
-        SceneManager.LoadScene(1);
-    }
-    public void MainMenue()
-    {
-        SceneManager.LoadScene("MainMenue");
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
     }
     public void Victory()
     {
         SceneManager.LoadScene("Victory");
+        Cursor.visible = true;
     }
     public void LoseScreen()
     {
+        Cursor.visible = true;
         SceneManager.LoadScene("Lose");
     }
-    public void ExitScreen()
-    {
-        Application.Quit();
-    }
 }
+

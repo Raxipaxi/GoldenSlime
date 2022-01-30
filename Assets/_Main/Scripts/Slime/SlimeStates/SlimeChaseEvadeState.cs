@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using System;
-using UnityEditor.VersionControl;
+
 
 public class SlimeChaseEvadeState<T> : State<T>
 {

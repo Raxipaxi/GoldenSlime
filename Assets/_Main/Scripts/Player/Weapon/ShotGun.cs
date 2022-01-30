@@ -22,7 +22,11 @@ public class ShotGun : MonoBehaviour
         }
         currentAmmo = maxAmmo;
     }
-   
+    private void Start()
+    {
+        Daylight.instance.OnDay += Reload;
+    }
+
     public void Fire(float damage)
     {
  
