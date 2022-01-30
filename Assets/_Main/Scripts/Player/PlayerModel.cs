@@ -101,7 +101,7 @@ public class PlayerModel : Actor
         if (Time.time > _nextFire)
         {
             _shotGun.Fire(dmg);
-            CineMachineShake.instance.ShakeCamera(0.5f, 1);
+            CineMachineShake.instance.ShakeCamera(0.5f, 0.3f);
             OnAttack?.Invoke();
             _nextFire = Time.time + shotCD;
         }
