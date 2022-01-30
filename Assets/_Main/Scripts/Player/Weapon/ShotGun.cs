@@ -28,9 +28,10 @@ public class ShotGun : MonoBehaviour
  
         HudManager.instance.UpdateAmmo(currentAmmo);
         int index = 0 ;
-        if(currentAmmo <= 0) { return; }
+        if(currentAmmo <= 0) { AudioManager.instance.PlaySound(SoundClips.EmptyGun); return; }
         if(currentAmmo > 0)
         {
+            AudioManager.instance.PlaySound(SoundClips.Shoot);
             currentAmmo--;
             HudManager.instance.UpdateAmmo(currentAmmo);
 
@@ -52,6 +53,6 @@ public class ShotGun : MonoBehaviour
     {
         currentAmmo = maxAmmo;
         HudManager.instance.UpdateAmmo(currentAmmo);
-
+        AudioManager.instance.PlaySound(SoundClips.Reload);
     }
 }

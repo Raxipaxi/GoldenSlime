@@ -105,6 +105,10 @@ public class PlayerModel : Actor
             OnAttack?.Invoke();
             _nextFire = Time.time + shotCD;
         }
+        else
+        {
+            AudioManager.instance.PlaySound(SoundClips.Reload);
+        }
     }
 
     public void Run(Vector3 dir)

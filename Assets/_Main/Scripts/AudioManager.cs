@@ -14,6 +14,8 @@ public enum SoundClips
     GoldenSlime,
     AttackSound,
     PlayerTakesDamage,
+    Reload,
+    EmptyGun,
 }
 
 public class AudioManager : MonoBehaviour
@@ -34,7 +36,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip slimeWalkSound;
     [SerializeField] private AudioClip slimeGetHit;
     [SerializeField] private AudioClip goldenSlime;
-
+    [SerializeField] private AudioClip emptyGun;
+    [SerializeField] private AudioClip reloadGun;
     [Header("UI Sounds")]
     [SerializeField] private AudioClip interactableClick;
 
@@ -104,7 +107,14 @@ public class AudioManager : MonoBehaviour
                 soundsAudioSource.volume = 1f;
                 soundsAudioSource.PlayOneShot(interactableClick);
                 break;
-
+            case SoundClips.Reload:
+                soundsAudioSource.volume = 0.5f;
+                soundsAudioSource.PlayOneShot(reloadGun);
+                break;
+            case SoundClips.EmptyGun:
+                soundsAudioSource.volume = 0.5f;
+                soundsAudioSource.PlayOneShot(emptyGun);
+                break;
             default:
                 break;
         }
