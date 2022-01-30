@@ -34,8 +34,8 @@ public class SlimeController : MonoBehaviour
     {
         _slimeModel.OnDie += DieCommand;
         _slimeModel.Suscribe(this);
-        FsmInit();  
         InitDecisionTree();
+        FsmInit();  
     }
     #region Commands
     private void WalkCommand(Vector3 moveDir)
@@ -61,6 +61,14 @@ public class SlimeController : MonoBehaviour
         var dead = new SlimeDieState<EnemyStates>(DieCommand);
         var idle = new SlimeIdleState<EnemyStates>(IdleCommand);
         var chase = new SlimeChaseState<EnemyStates>(_target.transform, _root, behaviour, RunCommand, _slimeModel._stats.AttackCooldown);
+
+        idle.AddTransition(EnemyStates.Patrol, patrol);
+
+        patrol.AddTransition(EnemyStates.Follow, chase);
+
+        chase.AddTransition(EnemyStates.Patrol, patrol);
+        dead.AddTransition(EnemyStates.Idle, idle);
+
         _fsm = new FSM<EnemyStates>();
         _fsm.SetInit(patrol);
     }
@@ -72,10 +80,14 @@ public class SlimeController : MonoBehaviour
         var goToChase = new ActionNode(() => _fsm.Transition(EnemyStates.Follow));
         var goToScape = new ActionNode(() => _fsm.Transition(EnemyStates.Escape));
 
+
+        QuestionNode isPlayerAlive = new QuestionNode(_target.IsAlive, goToPatrol, goToIdle);
         QuestionNode isOnReach = new QuestionNode(CanAttack, goToAttack, goToChase);
         QuestionNode isDayTime = new QuestionNode(DayTime, goToScape, isOnReach);
         QuestionNode isOnPlayerSight = new QuestionNode(CanSeeTarget, goToChase, goToPatrol);
         QuestionNode isRecentilySpawned = new QuestionNode(IsRecentlySpawned, isOnPlayerSight, null);
+
+        _root = isPlayerAlive;
     }
 
     private bool CanAttack()

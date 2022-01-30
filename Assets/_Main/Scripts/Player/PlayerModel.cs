@@ -2,11 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class PlayerModel : Actor
 {
     #region Properties
-
     private Rigidbody _rb;
     [SerializeField] private float walkSpeed;
     [SerializeField] private float runSpeed;
@@ -101,6 +101,7 @@ public class PlayerModel : Actor
         if (Time.time > _nextFire)
         {
             _shotGun.Fire(dmg);
+            CineMachineShake.instance.ShakeCamera(0.5f, 1);
             OnAttack?.Invoke();
             _nextFire = Time.time + shotCD;
         }
@@ -128,6 +129,10 @@ public class PlayerModel : Actor
         {
             Die();
         }
+    }
+    public bool IsAlive()
+    {
+        return CurrentLife > 0;
     }
 
     #endregion
