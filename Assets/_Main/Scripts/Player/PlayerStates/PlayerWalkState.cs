@@ -27,7 +27,7 @@ public class PlayerWalkState<T> : State<T>
             _fsm.Transition(_inputIdle);
             return; // Trans to Idle
         }
-        if(_playerInput.IsAttackMelee())
+        if(_playerInput.IsShooting())
         {
             _fsm.Transition(_inputMelee);
             return;

@@ -21,16 +21,18 @@ public class ShotGun : MonoBehaviour
         }
     }
 
-    void Fire()
+    public void Fire(float damage)
     {
         int index = 0 ;
-        foreach (var quat in pellets)
+        for (int i = 0; i < pellets.Count; i++)
         {
             pellets[index] = Random.rotation;
             GameObject pelletInst = Instantiate(this.pellet, barrelExit.position, barrelExit.rotation);
             pelletInst.transform.rotation = Quaternion.RotateTowards(pelletInst.transform.rotation, pellets[index],spreadAngle);
-            pelletInst.GetComponent<Rigidbody>().AddForce(pelletInst.transform.right * pelletVel);
+            pelletInst.GetComponent<PelletDmg>().SetDamage(damage);
+            pelletInst.GetComponent<Rigidbody>().AddForce(pelletInst.transform.forward * pelletVel);
             index++;
         }
+   
     }
 }

@@ -3,14 +3,14 @@ using System;
 public class PlayerIdleState<T> : State<T>
 {
     T _inputWalk;
-    T _inputMelee;
+    T _inputShoot;
     private Action _onIdle;
     private iInput _playerInput;
 
-    public PlayerIdleState(Action onIdle, T inputWalk, T inputMelee, iInput playerInput)
+    public PlayerIdleState(Action onIdle, T inputWalk, T inputShoot, iInput playerInput)
     {
         _inputWalk = inputWalk;
-        _inputMelee = inputMelee;
+        _inputShoot = inputShoot;
         _onIdle = onIdle;
         _playerInput = playerInput;
     }
@@ -25,9 +25,9 @@ public class PlayerIdleState<T> : State<T>
             return;
         }
 
-        if (_playerInput.IsAttackMelee())
+        if (_playerInput.IsShooting())
         {
-            _fsm.Transition(_inputMelee);
+            _fsm.Transition(_inputShoot);
         }
         _onIdle?.Invoke();
     }

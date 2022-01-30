@@ -12,7 +12,18 @@ public class PlayerModel : Actor
     [SerializeField] private float runSpeed;
     [SerializeField] private float _rotationVelocity;
     private PlayerView _animation;
+    [SerializeField] private ShotGun _shotGun;
+    [SerializeField] private float shotCD;
+    private float _nextFire;
     private Camera _camera;
+
+    #region Actions
+
+    public event Action OnAttack;
+    public event Action OnWalk;
+    public event Action OnIdle;
+
+    #endregion
 
     private Transform _transform;
     // Damageable properties
@@ -34,6 +45,12 @@ public class PlayerModel : Actor
         _camera = Camera.main;
     }
 
+    private void Start()
+    {
+        _animation.SubscribeEvent(this);
+        _nextFire = 0;
+    }
+
     public void Subscribe(PlayerController controller)
     {
         controller.OnIdle += Idle;
@@ -53,6 +70,7 @@ public class PlayerModel : Actor
     {
         _rb.velocity = Vector3.zero;
         CorrectRotation();
+        OnIdle?.Invoke();
     }
 
     
@@ -74,12 +92,18 @@ public class PlayerModel : Actor
         var normalizedDir = dir.normalized;
         _rb.velocity = new Vector3(normalizedDir.x*speed,_rb.velocity.y,normalizedDir.z*speed);
         CorrectRotation();
+        OnWalk?.Invoke();
 
     }
 
     public override void Attack(float dmg)
     {
-        Debug.Log("CACHIN"); // TODO agregar la accion de danio
+        if (Time.time > _nextFire)
+        {
+            _shotGun.Fire(dmg);
+            OnAttack?.Invoke();
+            _nextFire = Time.time + shotCD;
+        }
     }
 
     public void Run(Vector3 dir)

@@ -3,6 +3,6 @@
     float GetH { get; }
     float GetV { get; }
     bool IsMoving();
-    public bool IsAttackMelee();
+    public bool IsShooting();
     void UpdateInputs();
 }
