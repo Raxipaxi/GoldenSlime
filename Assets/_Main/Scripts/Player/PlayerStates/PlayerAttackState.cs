@@ -21,14 +21,13 @@ public class PlayerAttackState<T> : State<T>
 
     public override void Awake()
     {
-        Debug.Log("PEW PEW PEW");
     }
 
     public override void Execute()
     {
         _onAttack?.Invoke(_dmg);
         _playerInput.UpdateInputs();
-        Debug.Log("Pew pew");
+
         if (_playerInput.IsMoving())
         {
             parentFSM.Transition(_inputMove);
