@@ -67,7 +67,7 @@ public class SlimeModel : Actor, IPooleable
     {
 
         OnDie.Invoke();
-        gameObject.SetActive(false);
+        Destroy(this);
     }
     public override void TakeDamage(float dmg)
     {
