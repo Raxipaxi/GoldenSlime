@@ -15,7 +15,7 @@ public class ObstacleAvoidance: ISteering
     public bool StopMovement;
     public enum Steering
     {
-        Flee,
+        Evade,
         Chase,
         Wander
     }
@@ -37,10 +37,10 @@ public class ObstacleAvoidance: ISteering
     }
     private void SetBehaviours(Transform self, Transform target, float targetVel, float timePrediction)
     {
-        var flee = new FleeBehaviour(self, target, targetVel, timePrediction);
-        behaviours.Add(Steering.Flee,flee);
-        var chase = new ChaseBehaviour(self, target, targetVel, timePrediction);
-        behaviours.Add(Steering.Chase, chase);
+        var flee = new Evasion(self, target, targetVel, timePrediction);
+        behaviours.Add(Steering.Evade,flee);
+        var persuit = new Pursuit(self, target, targetVel, timePrediction);
+        behaviours.Add(Steering.Chase, persuit);
         var wander = new Wander(self,250f,10f);
         behaviours.Add(Steering.Wander, wander);
     }

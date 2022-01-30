@@ -84,7 +84,7 @@ public class SlimeController : MonoBehaviour
         var chase = new SlimeChaseEvadeState<EnemyStates>(_target.transform, RunCommand, CanSeeTarget, behaviour,
            ObstacleAvoidance.Steering.Chase, chaseCD, _root);
         var evade = new SlimeChaseEvadeState<EnemyStates>(_target.transform, RunCommand, CanSeeTarget, behaviour,
-           ObstacleAvoidance.Steering.Flee, evadeCD, _root);
+           ObstacleAvoidance.Steering.Evade, evadeCD, _root);
         var attack = new SlimeAttackState<EnemyStates>(AttackCommand, _slimeModel._stats.AttackCooldown,
             _slimeModel._stats.AttackDamage, _root);
         
@@ -158,6 +158,7 @@ public class SlimeController : MonoBehaviour
     }
     private bool DayTime()
     {
+        Debug.Log("Es de dia " + dayNight);
         return dayNight;
     }
     private bool IsRecentlySpawned()
@@ -167,11 +168,13 @@ public class SlimeController : MonoBehaviour
     public bool CanSeeTarget()
     {
         var playerInSight = _slimeModel.LineOfSight.CanSeeSomeone(_target.transform);
+       // Debug.Log("Te veo " + playerInSight);
         return playerInSight;
     }
 
     public bool PlayerAlive()
     {
+        Debug.Log("is player alive " + _target.IsAlive());
         return _target.IsAlive();
     }
     private void Update()
