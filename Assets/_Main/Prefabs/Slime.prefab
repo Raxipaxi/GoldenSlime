@@ -181,7 +181,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67117290f38586b4bbd5f0fe10ca560f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _target: {fileID: 919132147610631155, guid: 1a4963899272b154c890240285591ebb, type: 3}
+  _target: {fileID: 0}
   chaseCD: 2
   evadeCD: 3
   avoidtats: {fileID: 11400000, guid: bf095bf9a9e82304fb5f2c2c0586fd2d, type: 2}

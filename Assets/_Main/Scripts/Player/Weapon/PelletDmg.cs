@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PelletDmg : MonoBehaviour, IPooleable
@@ -8,11 +5,11 @@ public class PelletDmg : MonoBehaviour, IPooleable
     [SerializeField] private float _damage;
     [SerializeField] private float _lifeTime;
     private float _currentLifeTime;
-    [SerializeField] private LayerMask playerMask;
+    [SerializeField] private LayerMask enemyMask;
     private bool wasShooted;
     private void OnCollisionEnter(Collision collision)
     {
-        if ((playerMask & 1 << collision.gameObject.layer) == 1 << collision.gameObject.layer)
+        if ((enemyMask & 1 << collision.gameObject.layer) == 1 << collision.gameObject.layer)
         {
             var colls = collision.gameObject.GetComponent<iDamageable>();
             colls?.TakeDamage(_damage);
