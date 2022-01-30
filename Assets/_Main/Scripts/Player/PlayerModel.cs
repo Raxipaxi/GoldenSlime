@@ -10,6 +10,7 @@ public class PlayerModel : Actor
     private Rigidbody _rb;
     [SerializeField] private float walkSpeed;
     [SerializeField] private float runSpeed;
+    [SerializeField] private float _rotationVelocity;
     private PlayerView _animation;
     private Camera _camera;
 
@@ -17,7 +18,7 @@ public class PlayerModel : Actor
     // Damageable properties
     float CurrentLife => life;
     [Header("Current Life")]
-    [SerializeField]private float life = 10;
+    [SerializeField] private float life = 10;
     // public float MaxLife => maxLife;
     // [Header("Maximum Life")]
     [SerializeField] private float maxLife = 10;
@@ -39,7 +40,7 @@ public class PlayerModel : Actor
         controller.OnMove += Walk;
         controller.OnMelee += Attack;
     }
-    
+
     #region Mobile Methods
     public void Walk(Vector3 dir)
     {
@@ -48,23 +49,31 @@ public class PlayerModel : Actor
 
     }
 
-    public override void Idle() 
+    public override void Idle()
     {
         _rb.velocity = Vector3.zero;
+        CorrectRotation();
     }
 
-    private float _rotationVelocity;
-    private void CorrectRotation(Vector3 moveDir)
+    
+    private void CorrectRotation()
     {
-        var targetRotation = Mathf.Atan2(moveDir.x, moveDir.z) * Mathf.Rad2Deg + _camera.transform.eulerAngles.y;
-        var rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref _rotationVelocity, 0.12f);
-        transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
-    }
+        Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hitInfo))
+        {
+            var target = hitInfo.point;
+            target.y = transform.position.y;
+            var distance = Vector3.Distance(transform.position, hitInfo.point);
+            if (distance >= 1f)
+                transform.LookAt(target);
+        }
+    }  
+     
     public override void Move(Vector3 dir, float speed)
     {
         var normalizedDir = dir.normalized;
-        CorrectRotation(normalizedDir); //TODO rever rotacion
         _rb.velocity = new Vector3(normalizedDir.x*speed,_rb.velocity.y,normalizedDir.z*speed);
+        CorrectRotation();
 
     }
 
