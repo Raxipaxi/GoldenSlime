@@ -255,6 +255,10 @@ PrefabInstance:
       propertyPath: m_Constraints
       value: 116
       objectReference: {fileID: 0}
+    - target: {fileID: 919132147610631157, guid: 1a4963899272b154c890240285591ebb, type: 3}
+      propertyPath: shotgunDmg
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 1167738149163953680, guid: 1a4963899272b154c890240285591ebb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 66.41285
@@ -762,78 +766,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 605024313215176264, guid: a42743f2cf9fd2b4a862108e7f09964b, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -19.025114
-      objectReference: {fileID: 0}
-    - target: {fileID: 605024313215176264, guid: a42743f2cf9fd2b4a862108e7f09964b, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 4.5810146
-      objectReference: {fileID: 0}
-    - target: {fileID: 605024313215176264, guid: a42743f2cf9fd2b4a862108e7f09964b, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.45155996
-      objectReference: {fileID: 0}
-    - target: {fileID: 605024313215176264, guid: a42743f2cf9fd2b4a862108e7f09964b, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7414526
-      objectReference: {fileID: 0}
-    - target: {fileID: 605024313215176264, guid: a42743f2cf9fd2b4a862108e7f09964b, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.6710053
-      objectReference: {fileID: 0}
-    - target: {fileID: 605024313215176264, guid: a42743f2cf9fd2b4a862108e7f09964b, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.000000031894274
-      objectReference: {fileID: 0}
-    - target: {fileID: 605024313215176264, guid: a42743f2cf9fd2b4a862108e7f09964b, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.000000028863916
-      objectReference: {fileID: 0}
     - target: {fileID: 1875463689368674956, guid: a42743f2cf9fd2b4a862108e7f09964b, type: 3}
       propertyPath: m_Name
       value: CamSystem
-      objectReference: {fileID: 0}
-    - target: {fileID: 2534308515773934966, guid: a42743f2cf9fd2b4a862108e7f09964b, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -19.025114
-      objectReference: {fileID: 0}
-    - target: {fileID: 2534308515773934966, guid: a42743f2cf9fd2b4a862108e7f09964b, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 4.5810146
-      objectReference: {fileID: 0}
-    - target: {fileID: 2534308515773934966, guid: a42743f2cf9fd2b4a862108e7f09964b, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.45155996
-      objectReference: {fileID: 0}
-    - target: {fileID: 2534308515773934966, guid: a42743f2cf9fd2b4a862108e7f09964b, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7414526
-      objectReference: {fileID: 0}
-    - target: {fileID: 2534308515773934966, guid: a42743f2cf9fd2b4a862108e7f09964b, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.6710053
-      objectReference: {fileID: 0}
-    - target: {fileID: 2534308515773934966, guid: a42743f2cf9fd2b4a862108e7f09964b, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.000000031894274
-      objectReference: {fileID: 0}
-    - target: {fileID: 2534308515773934966, guid: a42743f2cf9fd2b4a862108e7f09964b, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.000000028863916
       objectReference: {fileID: 0}
     - target: {fileID: 5433619517803959411, guid: a42743f2cf9fd2b4a862108e7f09964b, type: 3}
       propertyPath: m_Follow
       value: 
       objectReference: {fileID: 1870891000}
-    - target: {fileID: 5433619517803959411, guid: a42743f2cf9fd2b4a862108e7f09964b, type: 3}
-      propertyPath: m_LookAt
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5433619517803959411, guid: a42743f2cf9fd2b4a862108e7f09964b, type: 3}
-      propertyPath: m_Lens.Dutch
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6413371608553859897, guid: a42743f2cf9fd2b4a862108e7f09964b, type: 3}
       propertyPath: m_RootOrder
       value: 0

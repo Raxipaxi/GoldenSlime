@@ -28,6 +28,7 @@ public class ShotGun : MonoBehaviour
         {
             pellets[index] = Random.rotation;
             GameObject pelletInst = GenericPool.Instance.SpawnFromPool("Bullet", barrelExit.position, barrelExit.rotation);
+            //GameObject pelletInst = Instantiate(this.pellet, barrelExit.position, barrelExit.rotation);
             
             pelletInst.transform.rotation = Quaternion.RotateTowards(pelletInst.transform.rotation, pellets[index],spreadAngle);
             pelletInst.GetComponent<PelletDmg>().SetDamage(damage);
