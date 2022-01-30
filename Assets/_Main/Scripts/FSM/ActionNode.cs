@@ -1,18 +1,17 @@
-﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
+using System;
 
-class ActionNode : INode
+public class ActionNode : INode
 {
-    private Action _action;
-    public void Execute()
-    {
-        if(_action != null)
-        {
-            _action();
-        }
-    }
+    Action _actionToExecute;
     public ActionNode(Action action)
     {
-        _action = action;
+        _actionToExecute = action;
+    }
+    public void Execute()
+    {
+        _actionToExecute();
     }
 }

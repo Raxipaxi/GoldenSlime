@@ -24,12 +24,12 @@ public class PlayerWalkState<T> : State<T>
        
         if (!_playerInput.IsMoving())
         {
-            _fsm.Transition(_inputIdle);
+            parentFSM.Transition(_inputIdle);
             return; // Trans to Idle
         }
         if(_playerInput.IsShooting())
         {
-            _fsm.Transition(_inputMelee);
+            parentFSM.Transition(_inputMelee);
             return;
         }
         

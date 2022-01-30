@@ -17,7 +17,7 @@ public class SlimeGenerator : MonoBehaviour
     private Vector3 GenerateSlimesPos()
     {
         Vector3 spawnPosition = Random.insideUnitCircle * spawnRadius;
-        spawnPosition.y = 0;
+        spawnPosition.y = 1f;
         return spawnPosition;
     }
     private void SpawnSlime()

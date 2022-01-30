@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82e709a4eea08ec43b56854fd1cb7367, type: 3}
   m_Name: LineOfSight
   m_EditorClassIdentifier: 
-  _angle: 260.03
-  _range: 800
+  _angle: 90
+  _range: 4
   _obstacleMask:
     serializedVersion: 2
     m_Bits: 4096

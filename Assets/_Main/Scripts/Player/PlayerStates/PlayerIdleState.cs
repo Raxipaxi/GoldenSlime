@@ -21,13 +21,13 @@ public class PlayerIdleState<T> : State<T>
         _playerInput.UpdateInputs();
         if (_playerInput.IsMoving())
         {
-            _fsm.Transition(_inputWalk);
+            parentFSM.Transition(_inputWalk);
             return;
         }
 
         if (_playerInput.IsShooting())
         {
-            _fsm.Transition(_inputShoot);
+            parentFSM.Transition(_inputShoot);
         }
         _onIdle?.Invoke();
     }

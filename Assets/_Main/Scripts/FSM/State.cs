@@ -2,58 +2,66 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class State<T> : IState<T>
+public class State <T> : IState <T>
 {
-    Dictionary<T, IState<T>> _transitions = new Dictionary<T, IState<T>>();
-    protected FSM<T> _fsm;
+    Dictionary<T, IState<T>> _stateTransitions = new Dictionary<T, IState<T>>();
+    FSM<T> _parentFSM;
 
-    public FSM<T> FinitStateMachine { get => _fsm; set => _fsm = value; }
+    public FSM<T> parentFSM { get => _parentFSM; set => _parentFSM = value; }
 
     public virtual void Awake()
     {
 
     }
+
     public virtual void Execute()
     {
 
     }
+
     public virtual void Sleep()
     {
 
     }
-    public void AddTransition(T input, IState<T> state)
+
+    public void AddTransition (T input, IState<T> transitionState)
     {
-        if (!_transitions.ContainsKey(input))
+        if (!_stateTransitions.ContainsKey(input))
         {
-            _transitions[input] = state;
+            _stateTransitions[input] = transitionState;
         }
     }
+
     public void RemoveTransition(T input)
     {
-        if (_transitions.ContainsKey(input))
+        if (_stateTransitions.ContainsKey(input))
         {
-            _transitions.Remove(input);
+            _stateTransitions.Remove(input);
         }
     }
-    public void RemoveTransition(IState<T> state)
+
+    public void RemoveTransition (IState<T> state)
     {
-        if (_transitions.ContainsValue(state))
+        if (_stateTransitions.ContainsValue(state))
         {
-            foreach (var item in _transitions)
+            foreach (var item in _stateTransitions)
             {
                 if (item.Value == state)
                 {
-                    _transitions.Remove(item.Key);
+                    _stateTransitions.Remove(item.Key);
                 }
             }
         }
     }
-    public IState<T> GetTransition(T input)
+
+    public IState <T> GetTransition (T input)
     {
-        if (_transitions.ContainsKey(input))
+        if (_stateTransitions.ContainsKey(input))
         {
-            return _transitions[input];
+            return _stateTransitions[input];
         }
         return null;
     }
+
+ 
 }

@@ -6,7 +6,6 @@ using UnityEditor.VersionControl;
 public class SlimeChaseEvadeState<T> : State<T>
 {
     private Action<Vector3>  _behave;
-    private Func<bool> _canSeeTarget;
     private T _inputWander;
     private INode _root;
     private ObstacleAvoidance _obst;
@@ -15,11 +14,9 @@ public class SlimeChaseEvadeState<T> : State<T>
     private float _counter;
     private float _timeToAct;
     
-    public SlimeChaseEvadeState(Transform target,Action<Vector3> behave, Func<bool> canSeeTarget,ObstacleAvoidance obst, ObstacleAvoidance.Steering steering,float timeToAct, INode root)
+    public SlimeChaseEvadeState(Transform target,Action<Vector3> behave, ObstacleAvoidance obst, ObstacleAvoidance.Steering steering,float timeToAct, INode root)
     {
         _behave = behave;
-        _canSeeTarget = canSeeTarget;
-      
         _root = root;
         _obst = obst;
         _steering = steering;
@@ -30,28 +27,29 @@ public class SlimeChaseEvadeState<T> : State<T>
 
     public override void Awake()
     {
+        Debug.Log("AWAKE");
         _obst.SetNewBehaviour(_steering);
         _obst.SetNewTarget(_target);
         ResetCounter();
     }
     private void ResetCounter()
     {
-        _counter = _timeToAct;
+        _counter = Time.time+_timeToAct;
     }
 
     public override void Execute()
     {
-        Debug.Log(_steering);
+//        Debug.Log(_steering);
         var dir = _obst.GetDir();
         _behave?.Invoke(dir);
-
-        if (_canSeeTarget()) {_root.Execute(); return; }
         
-        _counter -= Time.deltaTime;
-
-        if (_counter > 0) return;
+        if (_counter < Time.time) 
+        {  
+            
+            _root.Execute();
+            return;
+        }
+        Debug.Log("No sale");
         
-        _root.Execute();
-
     }
 }

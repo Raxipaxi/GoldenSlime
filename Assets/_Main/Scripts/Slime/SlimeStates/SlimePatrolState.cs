@@ -24,12 +24,12 @@ public class SlimePatrolState<T> : State<T>
     }
     public override void Execute()
     {
+        Debug.Log("Wander");
         var canSee = _isSeen.Invoke();
+        
         if (canSee)
-        {
-            _root.Execute();
-            return;
-        }
+        { _root.Execute(); return; }
+      
         var dir = _obstacleAvoidance.GetDir();
          dir.y = 0;
         _onWalk?.Invoke(dir);

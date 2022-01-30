@@ -31,11 +31,11 @@ public class PlayerAttackState<T> : State<T>
         Debug.Log("Pew pew");
         if (_playerInput.IsMoving())
         {
-            _fsm.Transition(_inputMove);
+            parentFSM.Transition(_inputMove);
         }
         else
         {
-            _fsm.Transition(_inputIdle);
+            parentFSM.Transition(_inputIdle);
         }
         
         

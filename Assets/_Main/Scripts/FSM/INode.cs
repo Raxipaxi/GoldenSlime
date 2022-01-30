@@ -1,8 +1,8 @@
-﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
-public interface INode
+public interface INode 
 {
-    public void Execute();
+    void Execute();
 }
-
