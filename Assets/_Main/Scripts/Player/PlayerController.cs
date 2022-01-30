@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     public event Action<Vector3> OnMove; 
     public event Action OnIdle;
     public event Action<float> OnMelee;
+    public float shotgunDmg;
     private void Awake()
     {
         _player = GetComponent<PlayerModel>();
@@ -32,20 +33,20 @@ public class PlayerController : MonoBehaviour
         //--------------- FSM Creation -------------------//                
         var idle = new PlayerIdleState<PlayerStatesEnum>(IdleCommmand, PlayerStatesEnum.Walk,PlayerStatesEnum.Melee,_playerInput );
         var walk = new PlayerWalkState<PlayerStatesEnum>(WalkCommmand, PlayerStatesEnum.Idle, PlayerStatesEnum.Melee, _playerInput);
-        var melee = new PlayerAttackState<PlayerStatesEnum>(PlayerStatesEnum.Idle,PlayerStatesEnum.Walk,AttMeleeCommand,1,_playerInput);
+        var shoot = new PlayerAttackState<PlayerStatesEnum>(PlayerStatesEnum.Idle,PlayerStatesEnum.Walk,ShootCommand,shotgunDmg,_playerInput);
         
         
         // Idle
         idle.AddTransition(PlayerStatesEnum.Walk, walk);
-        idle.AddTransition(PlayerStatesEnum.Melee, melee);
+        idle.AddTransition(PlayerStatesEnum.Melee, shoot);
         
         // Walk
         walk.AddTransition(PlayerStatesEnum.Idle, idle);
-        walk.AddTransition(PlayerStatesEnum.Melee, melee);
+        walk.AddTransition(PlayerStatesEnum.Melee, shoot);
         
         // Melee
-        melee.AddTransition(PlayerStatesEnum.Idle, idle);
-        melee.AddTransition(PlayerStatesEnum.Walk, walk);
+        shoot.AddTransition(PlayerStatesEnum.Idle, idle);
+        shoot.AddTransition(PlayerStatesEnum.Walk, walk);
 
         _fsm = new FSM<PlayerStatesEnum>();
         // Set init state
@@ -62,7 +63,7 @@ public class PlayerController : MonoBehaviour
         OnIdle?.Invoke();
     }
 
-    public void AttMeleeCommand(float dmg)
+    public void ShootCommand(float dmg)
     {
         OnMelee?.Invoke(dmg);   
     }

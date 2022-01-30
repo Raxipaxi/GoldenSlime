@@ -17,7 +17,7 @@ public class PlayerInput : MonoBehaviour, iInput
         return (GetH != 0 || GetV != 0 );
     }
 
-    public bool IsAttackMelee()
+    public bool IsShooting()
     {
         return Input.GetKeyDown(KeyCode.Space);
     }
