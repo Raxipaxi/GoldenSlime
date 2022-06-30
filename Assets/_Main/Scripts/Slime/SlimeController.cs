@@ -31,7 +31,6 @@ public class SlimeController : MonoBehaviour
     private void Awake()
     {
         _slimeModel = GetComponent<SlimeModel>();
-        behaviour = new ObstacleAvoidance(transform, _target.transform, avoidtats.CheckRadius, avoidtats.MaxObj, avoidtats.ObstacleLayer, avoidtats.Multiplier, _target.Vel, avoidtats.TimePrediction, ObstacleAvoidance.Steering.Wander);
         
 
     }
@@ -39,8 +38,9 @@ public class SlimeController : MonoBehaviour
     private void Start()
     {
         SubscribeEvents();
-        
+        _target = GameManager.instance.player;
         _slimeModel.Suscribe(this);
+        behaviour = new ObstacleAvoidance(transform, _target.transform, avoidtats.CheckRadius, avoidtats.MaxObj, avoidtats.ObstacleLayer, avoidtats.Multiplier, _target.Vel, avoidtats.TimePrediction, ObstacleAvoidance.Steering.Wander);
         InitDecisionTree();
         FsmInit();  
     }
