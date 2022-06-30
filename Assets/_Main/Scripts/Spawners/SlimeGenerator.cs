@@ -10,15 +10,15 @@ public class SlimeGenerator : MonoBehaviour
     [SerializeField] private int quantityPerRow;
     [SerializeField] private DayEvent dayEvent;
     private int slimeQuantity;
+    [SerializeField] Transform[] spawnPoints;
     private void Start()
     {
         dayEvent.OnDay += SpawnSlime;
     }
     private Vector3 GenerateSlimesPos()
     {
-        Vector3 spawnPosition = Random.insideUnitCircle * spawnRadius;
-        spawnPosition.y = 1f;
-        return spawnPosition;
+        var spawnPoint = spawnPoints[Random.Range(0,spawnPoints.Length)];
+        return spawnPoint.position;
     }
     private void SpawnSlime()
     {
