@@ -56,7 +56,7 @@ public class ShotGun : MonoBehaviour
     public void Reload()
     {
         currentAmmo = maxAmmo;
-        HudManager.instance.UpdateAmmo(currentAmmo);
+       // HudManager.instance.UpdateAmmo(currentAmmo);
         AudioManager.instance.PlaySound(SoundClips.Reload);
     }
 }
