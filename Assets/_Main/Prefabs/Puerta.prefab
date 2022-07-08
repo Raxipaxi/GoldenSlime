@@ -105,6 +105,8 @@ GameObject:
   - component: {fileID: 5060262871296470310}
   - component: {fileID: 5060262871296470309}
   - component: {fileID: 5060262871296470308}
+  - component: {fileID: 6161969074386123541}
+  - component: {fileID: 9058738593039683825}
   m_Layer: 0
   m_Name: Puerta
   m_TagString: Untagged
@@ -187,5 +189,34 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.07558334, y: 2.1118839, z: 1.2102388}
-  m_Center: {x: 0.029339321, y: 1.0559419, z: -0.6051194}
+  m_Size: {x: 0.03279584, y: 2.1118839, z: 1.2102389}
+  m_Center: {x: 0.007945573, y: 1.0559419, z: -0.60511947}
+--- !u!114 &6161969074386123541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5060262871296470331}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe2f726fce4cc2545b6227323b0dda84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeToDown: 3
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 256
+--- !u!65 &9058738593039683825
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5060262871296470331}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.03722952, y: 2.1118839, z: 1.2102389}
+  m_Center: {x: 0.048516266, y: 1.0559419, z: -0.60511947}
